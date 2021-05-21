@@ -27,14 +27,14 @@
             }
         }
     },
-  "variables": {
-    "hubResourceId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-cloud-services', '/providers/Microsoft.Network/virtualNetworks/', 'vn-uks-p-hub-01'))]",
-    "rbacNameForLz": "[guid(subscription().id)]",
-    // "rbacNameForNConnectivity": "[guid(concat(parameters('addresses'), deployment().name))]",
-    "vNetPolicyAssignment": "VNet-to-corp",
-    // "connectivityManagementGroup": "[concat(parameters('topLevelManagementGroupPrefix'), '-connectivity')]",
-    "vNetpolicyDefinition": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-VNET-HubSpoke')]"
-  },
+    "variables": {
+        "hubResourceId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', parameters('topLevelManagementGroupPrefix'), '-management-hub', '/providers/Microsoft.Network/virtualNetworks/', 'vn-uks-p-hub-01'))]",
+        "rbacNameForLz": "[guid(subscription().id)]",
+        // "rbacNameForNConnectivity": "[guid(concat(parameters('addresses'), deployment().name))]",
+        "vNetPolicyAssignment": "VNet-to-corp",
+        // "connectivityManagementGroup": "[concat(parameters('topLevelManagementGroupPrefix'), '-connectivity')]",
+        "vNetpolicyDefinition": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '/providers/Microsoft.Authorization/policyDefinitions/Deploy-VNET-HubSpoke')]"
+    },
     "resources": [
         {
             // Policy assignment to connect corp landing zones via virtual network peering to the virtual network in the connectivity subscription
@@ -50,12 +50,12 @@
                 "displayName": "Connect-Vnet-to-hub",
                 "policyDefinitionId": "[variables('vNetPolicyDefinition')]",
                 "parameters": {
-                  "vNetName": {
-                    "value": "[concat('vn-uks-p-production-01-', subscription().subscriptionId)]"
-                  },
-                  "vNetRgName": {
-                    "value": "[concat('rg-uks-p-production-01-', subscription().subscriptionId)]"
-                  },
+                    "vNetName": {
+                        "value": "[concat('corp-vnet-', subscription().subscriptionId)]"
+                    },
+                    "vNetRgName": {
+                        "value": "[concat('corp-rg-vnet-', subscription().subscriptionId)]"
+                    },
                     "vNetLocation": {
                         "value": "[parameters('location')]"
                     },
