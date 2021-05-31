@@ -119,7 +119,7 @@
         }
     },
     "variables": {
-        "laResourceId": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-uks-cs-01',/providers/Microsoft.OperationalInsights/workspaces/', 'la-uks-cs-01'))]",
+        "laResourceId": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-uks-cs-01',/providers/Microsoft.OperationalInsights/workspaces/', 'la-uks-cs-01')]",
         "solutions": {
             "security": {
                 "name": "[concat('Security', '(', parameters('workspaceName'), ')')]",
