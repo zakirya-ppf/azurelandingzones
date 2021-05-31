@@ -538,47 +538,47 @@
             "maxLength": 36
         }
     },
-  "variables": {
-    "azPolicyEnvMapping": {
-      "https://management.azure.com/": "auxiliary/policies.json",
-      "https://management.chinacloudapi.cn": "auxiliary/mkPolicies.json",
-      "https://management.azgov.com": "auxiliary/"
+    "variables": {
+        "azPolicyEnvMapping": {
+            "https://management.azure.com/": "auxiliary/policies.json",
+            "https://management.chinacloudapi.cn": "auxiliary/mkPolicies.json",
+            "https://management.azgov.com": "auxiliary/"
+        },
+        "azEnvPolicy": "[variables('azPolicyEnvMapping')[environment().resourceManager]]",
+        "deploymentUris": {
+            "managementGroups": "[uri(deployment().properties.templateLink.uri, 'auxiliary/mgmtGroups.json')]",
+            "policyDefinitions": "[concat(uri(deployment().properties.templateLink.uri, variables('azEnvPolicy')))]",
+            "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalytics.json')]",
+            "monitoringSolutions": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalyticsSolutions.json')]",
+            "connectivity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/hubspoke-connectivity.json')]",
+            "diagnosticsAndSecurity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
+            "landingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/lz.json')]",
+            "identity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/identity.json')]",
+            "corpConnectedLzs": "[uri(deployment().properties.templateLink.uri, 'auxiliary/corp-peering-copy.json')]",
+            "azOps": "[uri(deployment().properties.templateLink.uri, 'auxiliary/azOpsSetup.json')]"
+        },
+        "moveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', parameters('managementSubscriptionId'))]",
+        "noSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', 'na')]",
+        "noOnlineLzSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-online', '/', 'nalz')]",
+        "noCorpLzSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-corp', '/', 'nalz')]",
+        "noCorpConnectedLzSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-corp', '/', 'naconnect')]",
+        "connectivityMoveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-connectivity', '/', parameters('connectivitySubscriptionId'))]",
+        "noConnectivitySubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-connectivity', '/', 'naconn')]",
+        "identityMoveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-identity', '/', parameters('identitySubscriptionId'))]",
+        "noIdentitySubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-identity', '/', 'naid')]",
+        "deploymentNames": {
+            "mgmtGroupDeploymentName": "[take(concat('EntScale-Mgs', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+            "policyDeploymentName": "[take(concat('EntScale-Policy', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+            "monitoringDeploymentName": "[take(concat('EntScale-Monitoring', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+            "monitoringSolutionsDeploymentName": "[take(concat('EntScale-Solutions', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+            "diagAndSecDeploymentName": "[take(concat('EntScale-DiagSec', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+            "connectivityDeploymentName": "[take(concat('EntScale-Networking', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+            "lzDeploymentName": "[take(concat('EntScale-LZ', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+            "identityDeploymentName": "[take(concat('EntScale-Identity', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+            "corpConnectedDeploymentName": "[take(concat('EntScale-lz-connectivity', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
+            "azOpsDeploymentName": "[take(concat('EntScale-AzOps', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]"
+        }
     },
-    "azEnvPolicy": "[variables('azPolicyEnvMapping')[environment().resourceManager]]",
-    "deploymentUris": {
-      "managementGroups": "[uri(deployment().properties.templateLink.uri, 'auxiliary/mgmtGroups.json')]",
-      "policyDefinitions": "[concat(uri(deployment().properties.templateLink.uri, variables('azEnvPolicy')))]",
-      "monitoring": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalytics.json')]",
-      "monitoringSolutions": "[uri(deployment().properties.templateLink.uri, 'auxiliary/logAnalyticsSolutions.json')]",
-      "connectivity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/hubspoke-connectivity.json')]",
-      "diagnosticsAndSecurity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/diagnosticsAndSecurity.json')]",
-      "landingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/lz.json')]",
-      "identity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/identity.json')]",
-      "corpConnectedLzs": "[uri(deployment().properties.templateLink.uri, 'auxiliary/corp-peering-copy.json')]",
-      "azOps": "[uri(deployment().properties.templateLink.uri, 'auxiliary/azOpsSetup.json')]"
-    },
-    "moveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-cloud-services', '/', parameters('managementSubscriptionId'))]",
-    "noSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-cloud-services', '/', 'na')]",
-    "noOnlineLzSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-upm', '/', 'nalz')]",
-    "noCorpLzSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-production', '/', 'nalz')]",
-    "noCorpConnectedLzSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-production', '/', 'naconnect')]",
-    "connectivityMoveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management-hub', '/', parameters('connectivitySubscriptionId'))]",
-    "noConnectivitySubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management-hub', '/', 'naconn')]",
-    "identityMoveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-identity', '/', parameters('identitySubscriptionId'))]",
-    "noIdentitySubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-identity', '/', 'naid')]",
-    "deploymentNames": {
-      "mgmtGroupDeploymentName": "[take(concat('EntScale-Mgs', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-      "policyDeploymentName": "[take(concat('EntScale-Policy', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-      "monitoringDeploymentName": "[take(concat('EntScale-Monitoring', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-      "monitoringSolutionsDeploymentName": "[take(concat('EntScale-Solutions', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-      "diagAndSecDeploymentName": "[take(concat('EntScale-DiagSec', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-      "connectivityDeploymentName": "[take(concat('EntScale-Networking', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-      "lzDeploymentName": "[take(concat('EntScale-LZ', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-      "identityDeploymentName": "[take(concat('EntScale-Identity', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-      "corpConnectedDeploymentName": "[take(concat('EntScale-lz-connectivity', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-      "azOpsDeploymentName": "[take(concat('EntScale-AzOps', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]"
-    }
-  },
     "resources": [
         {
             "type": "Microsoft.Resources/deployments",
@@ -670,7 +670,7 @@
             "condition": "[not(empty(parameters('onlineLzSubscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
             "apiVersion": "2020-05-01",
-            "name": "[if(not(empty(parameters('onlineLzSubscriptionId'))), concat(parameters('enterpriseScaleCompanyPrefix'), '-upm', '/', parameters('onlineLzSubscriptionId')[copyIndex()]), variables('noOnlineLzSubscription'))]",
+            "name": "[if(not(empty(parameters('onlineLzSubscriptionId'))), concat(parameters('enterpriseScaleCompanyPrefix'), '-online', '/', parameters('onlineLzSubscriptionId')[copyIndex()]), variables('noOnlineLzSubscription'))]",
             "dependsOn": [
                 "[variables('deploymentNames').mgmtGroupDeploymentName]"
             ],
@@ -684,7 +684,7 @@
             "condition": "[not(empty(parameters('corpLzSubscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
             "apiVersion": "2020-05-01",
-            "name": "[if(not(empty(parameters('corpLzSubscriptionId'))), concat(parameters('enterpriseScaleCompanyPrefix'), '-production', '/', parameters('corpLzSubscriptionId')[copyIndex()]), variables('noCorpLzSubscription'))]",
+            "name": "[if(not(empty(parameters('corpLzSubscriptionId'))), concat(parameters('enterpriseScaleCompanyPrefix'), '-corp', '/', parameters('corpLzSubscriptionId')[copyIndex()]), variables('noCorpLzSubscription'))]",
             "dependsOn": [
                 "[variables('deploymentNames').mgmtGroupDeploymentName]"
             ],
@@ -698,7 +698,7 @@
             "condition": "[not(empty(parameters('corpConnectedLzSubscriptionId')))]",
             "type": "Microsoft.Management/managementGroups/subscriptions",
             "apiVersion": "2020-05-01",
-            "name": "[if(not(empty(parameters('corpConnectedLzSubscriptionId'))), concat(parameters('enterpriseScaleCompanyPrefix'), '-production', '/', parameters('corpConnectedLzSubscriptionId')[copyIndex()].subs), variables('noCorpConnectedLzSubscription'))]",
+            "name": "[if(not(empty(parameters('corpConnectedLzSubscriptionId'))), concat(parameters('enterpriseScaleCompanyPrefix'), '-corp', '/', parameters('corpConnectedLzSubscriptionId')[copyIndex()].subs), variables('noCorpConnectedLzSubscription'))]",
             "dependsOn": [
                 "[variables('deploymentNames').mgmtGroupDeploymentName]"
             ],
@@ -712,7 +712,7 @@
             "condition": "[and(not(empty(parameters('managementSubscriptionId'))),equals(parameters('enableLogAnalytics'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
-            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-cloud-services')]",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-management')]",
             "name": "[variables('deploymentNames').monitoringDeploymentName]",
             "dependsOn": [
                 "[variables('deploymentNames').policyDeploymentName]",
@@ -1003,7 +1003,7 @@
             "condition": "[and(not(empty(parameters('connectivitySubscriptionId'))),equals(parameters('enableHub'), 'Yes'))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-05-01",
-            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-management-hub')]",
+            "scope": "[concat('Microsoft.Management/managementGroups/', parameters('enterpriseScaleCompanyPrefix'), '-connectivity')]",
             "name": "[variables('deploymentNames').connectivityDeploymentName]",
             "dependsOn": [
                 "[variables('deploymentNames').diagAndSecDeploymentName]"
