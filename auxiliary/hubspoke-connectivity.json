@@ -524,7 +524,11 @@
                                                         }
                                                     }
                                                 ],
-                                                "firewallPolicy": "[variables('azFirewallPolicyId')]"
+                                                "firewallPolicy": "[variables('azFirewallPolicyId')]",
+
+                                                "sku": {
+                                                "tier": "Premium"
+                                                        }
                                             }
                                         }
                                     ]
