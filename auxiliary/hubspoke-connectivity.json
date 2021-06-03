@@ -138,10 +138,7 @@
         "erRegionalSku": {
             "type": "string",
             "defaultValue": ""
-        },
-            "bastion-subnet-ip-prefix": {
-      "value": "10.8.0.32/27"
-    }
+        }
         
     },
     "variables": {
@@ -174,7 +171,7 @@
         "azFwPipId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azFwIpName'))]",
         "resourceDeploymentName": "[take(concat(deployment().name, '-hubspoke', deployment().location), 64)]",
         "dDosResourceDeploymentName": "[take(concat(deployment().name, 'ddos', deployment().location), 64)]",
-
+        "bastion-subnet-ip-prefix" : "10.8.0.32/27",
         // Creating variable that later will be used in conjunction with the union() function to cater for conditional subnet creation while ensuring idempotency
         "gwSubnet": [
             {
@@ -734,7 +731,7 @@
                         "[resourceId('Microsoft.Network/networkSecurityGroups', 'nsg-uks-p-bastion-01')]"
                         ],
                         "properties": {
-                        "addressPrefix": "[parameters('bastion-subnet-ip-prefix')]",
+                        "addressPrefix": "[variables('bastion-subnet-ip-prefix')]",
                         "networkSecurityGroup": {
                         "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'nsg-uks-p-bastion-01')]"
                                 }
