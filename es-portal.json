@@ -1853,7 +1853,76 @@
                             "visible": true
                         }
                     ]
-                }
+                },
+                {
+                    "name": "lzBastion",
+                    "label": "Bastion",
+                    "subLabel": {},
+                    "bladeTitle": "lz Bastion",
+                    "elements": [
+                        {
+                            "name": "info",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": "[not(empty(steps('esGoalState').esMgmtSubSection.esMgmtSub))]",
+                            "options": {
+                                "text": "Bastion provides secure and seamless RDP/SSH connectivity to your virtual machines directly in the Azure portal over SSL",
+                                "uri": "https://azure.microsoft.com/en-gb/services/azure-bastion/",
+                                "style": "Info"
+                            }
+                        },
+                                              {
+                            "name": "esBastion",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "label": "Deploy BastionHost",
+                            "defaultValue": "Yes (recommended)",
+                            "toolTip": "If 'Yes' is selected ARM will deploy additional subnet on the connectivity virtual network",
+                            "constraints": {
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes (recommended)",
+                                        "value": "Yes"
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": "No"
+                                    }
+                                ]
+                            },
+                            "visible": true
+                        },
+
+                        {
+							"name": "lsNwSubSection",
+							"type": "Microsoft.Common.Section",
+							"label": "Connectivity subscription",
+							"elements": [
+								{
+									"type":"Microsoft.Common.SubscriptionSelector",
+									"name": "lsNwSub",
+									"label": "Connectivity subscription"
+								}
+							],
+							"visible": "[equals(steps('lzBastion').esBastion, 'Yes')]"
+            			},
+
+                        {
+                            "name": "esAddressBastion",
+                            "type": "Microsoft.Common.TextBox",
+                            "label": "Address space (required for hub virtual hub)",
+                            "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0)",
+                            "defaultValue": "10.100.0.0",
+                            "visible": "[equals(steps('lzBastion').esBastion, 'Yes')]",
+                            "constraints": {
+                                "required": true,
+                                "validationMessage": "The bastion subnet network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
+                            }
+                        }
+
+
+                    ]
+
+}
+
             ]
         },
         "outputs": {
