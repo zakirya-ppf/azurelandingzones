@@ -562,14 +562,12 @@
             "type": "Microsoft.Network/publicIpAddresses",
             "name": "pip-uks-p-bastion-01",
             "location": "uksouth",
-            "sku": {
-                "name": "Standard",
-            
+
             "properties": {
                 "publicIPAllocationMethod": "Static"
             }
-            }
-        },
+            },
+        
         {
             "apiVersion": "2020-07-01",
             "type": "Microsoft.Network/networkSecurityGroups",
