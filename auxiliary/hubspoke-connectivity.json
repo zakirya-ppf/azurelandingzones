@@ -563,8 +563,8 @@
             "name": "pip-uks-p-bastion-01",
             "location": "uksouth",
             "sku": {
-                "name": "Standard"
-            },
+                "name": "Standard",
+            
             "properties": {
                 "publicIPAllocationMethod": "Static"
             }
@@ -721,6 +721,7 @@
                 ]
             }
         },
+        
 		
 		                {
                         "apiVersion": "2020-07-01",
