@@ -568,7 +568,7 @@
 										{
 										"publicIPAllocationMethod": "Static"
 										}
-									}
+									},
 																		        								
 											{
 										"apiVersion": "2020-05-01",
