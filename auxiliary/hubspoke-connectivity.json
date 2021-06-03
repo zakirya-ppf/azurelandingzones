@@ -749,10 +749,10 @@
                         "name": "IpConf",
                         "properties": {
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', 'vn-uks-p-hub-01', 'AzureBastionSubnet')]"
+                                "id": "AzureBastionSubnet"
                             },
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIpAddresses', 'pip-uks-p-bastion-01')]"
+                                "id": "pip-uks-p-bastion-01"
                                              }
                                         }
                         }
