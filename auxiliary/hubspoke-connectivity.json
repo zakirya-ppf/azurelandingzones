@@ -569,7 +569,7 @@
                                             {
                                                 "apiVersion": "2016-03-30",
                                                 "type": "Microsoft.Network/virtualNetworks/subnets",
-                                                "name": "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'), '/subnets/AzureBastionSubnet')]",
+                                                "name": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/AzureBastionSubnet')]",
                                                 "location": "uksouth",
                                                 "dependsOn": [
                                                 "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
