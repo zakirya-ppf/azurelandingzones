@@ -555,8 +555,7 @@
             "landingZone": "[uri(deployment().properties.templateLink.uri, 'auxiliary/lz.json')]",
             "identity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/identity.json')]",
             "corpConnectedLzs": "[uri(deployment().properties.templateLink.uri, 'auxiliary/corp-peering-copy.json')]",
-            "azOps": "[uri(deployment().properties.templateLink.uri, 'auxiliary/azOpsSetup.json')]",
-            "Bastion":"[uri(deployment().properties.templateLink.uri, 'auxiliary/bastionSetup.json')]"
+            "azOps": "[uri(deployment().properties.templateLink.uri, 'auxiliary/azOpsSetup.json')]"
         },
         "moveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', parameters('managementSubscriptionId'))]",
         "noSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', 'na')]",
@@ -577,8 +576,7 @@
             "lzDeploymentName": "[take(concat('EntScale-LZ', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
             "identityDeploymentName": "[take(concat('EntScale-Identity', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
             "corpConnectedDeploymentName": "[take(concat('EntScale-lz-connectivity', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-            "azOpsDeploymentName": "[take(concat('EntScale-AzOps', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]",
-            "BastionDeploymentName":"[take(concat('EntScale-Bastion', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]"
+            "azOpsDeploymentName": "[take(concat('EntScale-AzOps', '-', deployment().location, guid(parameters('enterpriseScaleCompanyPrefix'))), 64)]"
         }
     },
     "resources": [
@@ -1163,23 +1161,7 @@
                     }
                 }
             }
-        },
-                {
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2019-10-01",
-            "name": "[variables('deploymentNames').BastionDeploymentName]",
-            "location": "[deployment().location]",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "contentVersion": "1.0.0.0",
-                    "uri": "[variables('deploymentUris').Bastion]"
-                },
-               
-                }
-            }
-
-        
+        }
     ],
     "outputs": {
         "deployment": {
