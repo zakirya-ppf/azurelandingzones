@@ -569,7 +569,7 @@
                                             {
                                                 "apiVersion": "2016-03-30",
                                                 "type": "Microsoft.Network/virtualNetworks/subnets",
-                                                "name": "vn-uks-p-hub-01/AzureBastionSubnet",
+                                                "name": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/AzureBastionSubnet')]",
                                                 "location": "uksouth",
                                                 "properties": {
                                                     "addressPrefix": "10.8.0.32/27"
