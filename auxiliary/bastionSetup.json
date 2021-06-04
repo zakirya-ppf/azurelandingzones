@@ -7,9 +7,6 @@
             "type": "string",
             "maxLength": 36
         },
-        "bastion-subnet-ip-prefix": {
-        "value": "10.8.0.32/27"
-        },
         "bastion-host-name": {
         "value": "vm-uks-p-bastion-01"
         },
@@ -22,6 +19,7 @@
         "vnet-name": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', 'rg-uks-p-hub-01', '/providers/Microsoft.Network/virtualNetworks/', 'vn-uks-p-hub-01')]",
         "public-ip-address-name": "'pip-uks-p-bastion-01')",
         "bastion-subnet-name": "AzureBastionSubnet",
+        "bastion-subnet-ip-prefix": "10.8.0.32/27",
         "nsg-name": "'nsg-uks-p-bastion-01')]"
     },
     "resources": [
@@ -199,7 +197,7 @@
                 "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsg-name'))]"
             ],
             "properties": {
-                "addressPrefix": "[parameters('bastion-subnet-ip-prefix')]",
+                "addressPrefix": "[variables('bastion-subnet-ip-prefix')]",
                 "networkSecurityGroup": {
                     "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsg-name'))]"
                 }
