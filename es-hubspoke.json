@@ -556,7 +556,7 @@
             "identity": "[uri(deployment().properties.templateLink.uri, 'auxiliary/identity.json')]",
             "corpConnectedLzs": "[uri(deployment().properties.templateLink.uri, 'auxiliary/corp-peering-copy.json')]",
             "azOps": "[uri(deployment().properties.templateLink.uri, 'auxiliary/azOpsSetup.json')]",
-            "Bastion":"[uri(deployment().properties.templateLink.uri, 'auxiliary/BastionSetup.json')]"
+            "Bastion":"[uri(deployment().properties.templateLink.uri, 'auxiliary/bastionSetup.json')]"
         },
         "moveSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', parameters('managementSubscriptionId'))]",
         "noSubscription": "[concat(parameters('enterpriseScaleCompanyPrefix'), '-management', '/', 'na')]",
