@@ -576,7 +576,7 @@
                             "name": "cicdOption",
                             "type": "Microsoft.Common.OptionsGroup",
                             "label": "Deploy integrated CICD pipeline?",
-                            "defaultValue": "Yes (recommended)",
+                            "defaultValue": "No",
                             "toolTip": "",
                             "constraints": {
                                 "allowedValues": [
@@ -810,7 +810,7 @@
                             "name": "esVpnGw",
                             "type": "Microsoft.Common.OptionsGroup",
                             "label": "Deploy VPN Gateway",
-                            "defaultValue": "No",
+                            "defaultValue": "Yes",
                             "visible": "[equals(steps('esConnectivityGoalState').esHub,'Yes')]",
                             "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy VPN gateway",
                             "constraints": {
@@ -1203,7 +1203,7 @@
                             "name": "esIdentity",
                             "type": "Microsoft.Common.OptionsGroup",
                             "label": "Enable identity subscription",
-                            "defaultValue": "Yes (recommended)",
+                            "defaultValue": "No",
                             "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will move selected subscription into identity management group",
                             "constraints": {
                                 "allowedValues": [
