@@ -51,7 +51,7 @@
                             "type": "Microsoft.Common.TextBox",
                             "label": "Management Group prefix",
                             "toolTip": "Provide a prefix (max 10 characters, unique at tenant-scope) for the Management Group hierarchy and other resources created as part of Enterprise-scale.",
-                            "defaultValue": "",
+                            "defaultValue": "ppf",
                             "constraints": {
                                 "required": true,
                                 "regex": "^[a-z0-9A-Z-]{1,10}$",
@@ -790,7 +790,7 @@
                             "name": "esDdoS",
                             "type": "Microsoft.Common.OptionsGroup",
                             "label": "Enable DDoS Protection Standard",
-                            "defaultValue": "Yes (recommended)",
+                            "defaultValue": "No",
                             "visible": "[equals(steps('esConnectivityGoalState').esHub,'Yes')]",
                             "toolTip": "If 'Yes' is selected when also adding a connectivity subscription, DDoS Protection Standard will be enabled.",
                             "constraints": {
