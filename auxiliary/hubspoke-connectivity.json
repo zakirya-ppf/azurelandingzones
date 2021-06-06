@@ -173,6 +173,7 @@
         "azBastionId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/AzureBastionSubnet')]",
         "azFwSubnetId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/AzureFirewallSubnet')]",
         "azFwPipId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azFwIpName'))]",
+        "BastionPipId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'), '/providers/Microsoft.Network/publicIPAddresses/pip-bat-uks-p-hub-01')]",
         "resourceDeploymentName": "[take(concat(deployment().name, '-hubspoke', deployment().location), 64)]",
         "dDosResourceDeploymentName": "[take(concat(deployment().name, 'ddos', deployment().location), 64)]",
         // Creating variable that later will be used in conjunction with the union() function to cater for conditional subnet creation while ensuring idempotency
@@ -597,7 +598,7 @@
                                 "id": "[variables('AzBastionId')]"
                             },
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIpAddresses/','pip-bat-uks-p-hub-01')]"
+                                "id": "[variables('BastionPipId')]"
                             }
                         }
                     }
