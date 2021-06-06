@@ -97,6 +97,10 @@
                 "description": "Provide the subscription id for the dedicated connectivity subscription."
             }
         },
+        "subnetMaskForBastion": {
+            "type": "string",
+            "defaultValue": "10.8.0.32/27",
+        },
         "subnetMaskForAzFw": {
             "type": "string",
             "defaultValue": "",
@@ -184,6 +188,14 @@
                 "name": "AzureFirewallSubnet",
                 "properties": {
                     "addressPrefix": "[parameters('subnetMaskForAzFw')]"
+                }
+            }
+        ],
+        "Bastionsubnet": [
+            {
+                "name": "AzureBastionSubnet",
+                "properties": {
+                    "addressPrefix": "[parameters('subnetMaskForBastion')]"
                 }
             }
         ],
@@ -343,6 +355,10 @@
                                                                   if(
                                                                       not(
                                                                           empty(parameters('subnetMaskForGw'))), variables('gwSubnet'), json('[]')), 
+                                                                    if(
+                                                                      not(
+                                                                          empty(parameters('subnetMaskForBastion'))), variables('BastionSubnet'), json('[]')),
+                                                                
                                                                           if(
                                                                               not(
                                                                                   empty(parameters('subnetMaskForAzFw'))), variables('fwSubnet'), json('[]')))]",
@@ -565,20 +581,7 @@
                                                 "publicIPAllocationMethod": "Static"
 
                                             }
-                                                },
-                                            {
-                                                "apiVersion": "2016-03-30",
-                                                "type": "Microsoft.Network/virtualNetworks/subnets",
-                                                "name": "AzureBastionSubnet",
-                                                "location": "uksouth",
-                                                "dependsOn": [
-                                                "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
-                                                ],
-                                                "properties": {
-                                                    "addressPrefix": "10.8.0.32/27"
-                                                    
-                                                        }
-                                                    }
+                                                }
                                     ]
                                 }
                             }
