@@ -597,7 +597,7 @@
                                 "id": "[variables('AzBastionId')]"
                             },
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIpAddresses','pip-bat-uks-p-hub-01')]"
+                                "id": "[resourceId('Microsoft.Network/publicIpAddresses/','pip-bat-uks-p-hub-01')]"
                             }
                         }
                     }
