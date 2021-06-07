@@ -740,6 +740,27 @@
 
                                             }
                                                 },
+
+                                                {
+      "apiVersion": "2018-03-01",
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "dependsOn": [
+        "nsg-uks-bat-01"
+      ],
+      "name": "[variables('AzBastionId')]",
+      "location": "uksouth",
+      "properties": {
+        "addressPrefix": "[parameters('subnetMaskForBastion')]",
+        "networkSecurityGroup": {
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'nsg-uks-bat-01')]"
+        }
+      }
+    },
+
+
+
+
+
                                             {
             "type": "Microsoft.Network/bastionHosts",
             "apiVersion": "2018-10-01",
