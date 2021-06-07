@@ -573,6 +573,31 @@
                                                     }
                                         },
 
+                                            {
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "nsg-uks-bat-01",
+      "location": "uksouth",
+      "apiVersion": "2020-05-01",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "SSH",
+            "properties": {
+              "description": "Allows SSH traffic",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "22",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 100,
+              "direction": "Inbound"
+            }
+          }
+        ]
+      }
+    },
+
                                                 {
                                                 "apiVersion": "2020-11-01",
                                                 "type": "Microsoft.Network/publicIPAddresses",
