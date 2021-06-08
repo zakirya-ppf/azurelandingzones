@@ -770,7 +770,7 @@
                             "name": "BastionNSGDeployment",
                             "resourceGroup": "[variables('rgName')]",
                             "dependsOn": [
-                                "[variables('BastionPipId')]"
+                                "[variables('BastionNSG')]"
                             ],
                             "properties": {
                                 "mode": "Incremental",
