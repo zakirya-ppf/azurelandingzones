@@ -770,7 +770,7 @@
                             "name": "BastionNSGDeployment",
                             "resourceGroup": "[variables('rgName')]",
                             "dependsOn": [
-                                "[concat('Microsoft.Network/networkSecurityGroups/','nsg-uks-bat-01')]"
+                                "[variables('BastionPipId')]"
                             ],
                             "properties": {
                                 "mode": "Incremental",
