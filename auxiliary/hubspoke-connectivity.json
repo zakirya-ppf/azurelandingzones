@@ -756,9 +756,6 @@
                                                             "addressPrefix": "[parameters('subnetMaskForBastion')]",
                                                             "networkSecurityGroup": {
                                                                 "id": "[variables('BastionNSG')]"
-                                                            },
-                                                            "publicIpAddress": {
-                                                                "id": "[variables('BastionPipId')]"
                                                             }
                                                         }
                                                     },
