@@ -790,7 +790,7 @@
                                     "properties": {
                                         "addressPrefix": "[parameters('subnetMaskForBastion')]",
                                         "networkSecurityGroup": {
-                                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'nsg-uks-bat-01')]"
+                                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups/', 'nsg-uks-bat-01')]"
         }
                                     }
                                         }
