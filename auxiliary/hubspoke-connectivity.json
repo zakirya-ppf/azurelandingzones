@@ -101,6 +101,22 @@
             "type": "string",
             "defaultValue": "10.8.0.32/27",
         },
+        "AddressPrefixPrd": {
+            "type": "string",
+            "defaultValue": "10.12.0.0/19",
+        },
+        "subnetMaskForPrd1": {
+            "type": "string",
+            "defaultValue": "10.12.2.0/24",
+        },
+        "subnetMaskForPrd2": {
+            "type": "string",
+            "defaultValue": "10.12.3.0/24",
+        },
+        "subnetMaskForPrd3": {
+            "type": "string",
+            "defaultValue": "10.12.4.0/24",
+        },
         "subnetMaskForAzFw": {
             "type": "string",
             "defaultValue": "",
@@ -782,7 +798,45 @@
                     }
                 ]
             }
-        }
+        },
+
+        {
+      "apiVersion": "2017-06-01",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "vn-uks-Production",
+      "location": "[parameters('location')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('AddressPrefixPrd')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "Subnet1",
+            "properties": {
+              "addressPrefix": "[parameters('subnetMaskForPrd1')]"
+            }
+          },
+          
+            {
+              "name": "Subnet2",
+              "properties": {
+                "addressPrefix": "[parameters('subnetMaskForPrd2')]"
+              }
+            },
+            
+              {
+                "name": "Subnet3",
+                "properties": {
+                  "addressPrefix": "[parameters('subnetMaskForPrd3')]"
+                }
+              }
+
+              ]
+      }
+    }
+
 
 
                                     ]
