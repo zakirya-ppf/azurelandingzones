@@ -158,6 +158,7 @@
         "vpngwname": "vpngw-uks-p-hub-01",
         "erGwName": "[concat(parameters('topLevelManagementGroupPrefix'), '-ergw-', parameters('location'))]",
         "rgName": "rg-uks-p-hub-01",
+        "BastionNSG": "nsg-uks-bat-01",
         "dDoSRgName": "rg-ddos-uks-p-hub-01",
         "dDoSName": "ddos-uks-01",
         "azFwPolicyName": "policy-uks-p-fw-01",
@@ -790,7 +791,7 @@
                                     "properties": {
                                         "addressPrefix": "[parameters('subnetMaskForBastion')]",
                                         "networkSecurityGroup": {
-                                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups/', 'nsg-uks-bat-01')]"
+                                        "id": "[variables('BastionNSG')]"
         }
                                     }
                                         }
