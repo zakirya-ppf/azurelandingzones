@@ -742,46 +742,26 @@
                                             }
                                                 },
 
-{
-            // Add NSG to Bastion Subnet
-
-                            "type": "Microsoft.Resources/deployments",
-                            "apiVersion": "2019-10-01",
-                            "name": "BastionNSGDeployment",
-                            "resourceGroup": "[variables('rgName')]",
-                            "dependsOn": [
-                                "[variables('BastionNSG')]"
-                            ],
-                            "properties": {
-                                "mode": "Incremental",
-                                "template": {
-                                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-                                    "contentVersion": "1.0.0.0",
-                                    "parameters": {},
-                                    "resources": [
-
-                                        {
-                                    "apiVersion": "2018-03-01",
-                                    "type": "Microsoft.Network/virtualNetworks/subnets",
-                                    "dependsOn": [
-                                        "nsg-uks-bat-01"
-                                                    ],
-                                    "name": "AzureBastionSubnet",
-                                    "location": "uksouth",
-                                    "properties": {
-                                        "addressPrefix": "[parameters('subnetMaskForBastion')]",
-                                        "networkSecurityGroup": {
-                                        "id": "[variables('BastionNSG')]"
+    {
+                                            "apiVersion": "2020-05-01",
+                                            "name": "[variables('BastionNSG')]",
+                                            "type": "Microsoft.Network/virtualNetworks/subnets",
+                                            "location": "[parameters('location')]",
+                                            "dependsOn": [
+                                                "[concat('Microsoft.Network/networkSecurityGroups/', variables('BastionNSG'))]"
+                                                
+                                            ],
+                                            "properties": {
+                                               
+                                                            "addressPrefix": "[parameters('subnetMaskForBastion')]",
+                                                            "networkSecurityGroup": {
+                                                                "id": "[variables('azVpnGwSubnetId')]"
+                                                            },
+                                                            "publicIpAddress": {
+                                                                "id": "[variables('BastionNSG')]"
+                                                            }
                                                         }
-                                    }
-                                        }
-
-
-
-                                    ]
-                                }
-                            }
-                        },
+                                                    },
 
 
 
