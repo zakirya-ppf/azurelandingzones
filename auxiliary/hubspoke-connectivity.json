@@ -748,7 +748,7 @@
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
                                             "location": "[parameters('location')]",
                                             "dependsOn": [
-                                                "[concat('Microsoft.Network/networkSecurityGroups/', variables('BastionNSG'))]"
+                                                "[variables('BastionNSG')]"
                                                 
                                             ],
                                             "properties": {
