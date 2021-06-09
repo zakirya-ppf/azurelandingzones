@@ -80,14 +80,6 @@
                             }
                         },
                         {
-                            "name": "esLocationsApi",
-                            "type": "Microsoft.Solutions.ArmApiControl",
-                            "request": {
-                                "method": "GET",
-                                "path": "locations?api-version=2019-11-01"
-                            }
-                        },
-                        {
                             "name": "esDdoS",
                             "type": "Microsoft.Common.OptionsGroup",
                             "label": "Enable DDoS Protection Standard",
