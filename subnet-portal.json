@@ -1,7 +1,6 @@
 {
     "$schema": "<relative path to createFormUI.schema.json>",
     "view": {
-        "kind": "Form",
         "properties": {
             "title": "Enterprise-Scale Subnet-NSG Creation",
             "steps": [
@@ -79,7 +78,7 @@
                 "subnetMaskForAzFw": "[steps('esConnectivityGoalState').esDdoS]"
                 
             },
-            "kind": "Tenant",
+
             "location": "[steps('basics').resourceScope.location.name]"
         }
     }
