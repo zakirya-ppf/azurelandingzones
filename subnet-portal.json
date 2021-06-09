@@ -88,18 +88,6 @@
                             }
                         },
                         {
-                            "name": "esNwLocation",
-                            "type": "Microsoft.Common.DropDown",
-                            "label": "Region for the first virtual network hub",
-                            "filter": true,
-                            "toolTip": "Select the target region for you connectivity deployment (requires you to provide a subscriptionId for connectivity)",
-                            "constraints": {
-                                "allowedValues": "[map(steps('esConnectivityGoalState').esLocationsApi.value,(item) => parse(concat('{\"label\":\"',item.displayName,'\",\"value\":\"',item.name,'\"}')))]",
-                                "required": true
-                            },
-                            "visible": "[equals(steps('esConnectivityGoalState').esHub,'Yes')]"
-                        },
-                        {
                             "name": "esDdoS",
                             "type": "Microsoft.Common.OptionsGroup",
                             "label": "Enable DDoS Protection Standard",
