@@ -114,8 +114,8 @@
         },
         "outputs": {
             "parameters": {
-                "subnetMaskForGw": "[steps('esConnectivityGoalState').esAddressVpnOrEr]",
-                "subnetMaskForAzFw": "[steps('esConnectivityGoalState').esAddressFw]"
+                "subnetMaskForGw": "[steps('esConnectivityGoalState').esAddressHub]",
+                "subnetMaskForAzFw": "[steps('esConnectivityGoalState').esDdoS]"
                 
             },
             "kind": "Tenant",
