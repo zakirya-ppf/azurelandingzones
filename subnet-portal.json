@@ -15,25 +15,7 @@
                         }
                     ]
                 },
-                {
-                    "name": "lzSettings",
-                    "label": "Enterprise-Scale company prefix",
-                    "subLabel": {
-                        "preValidation": "Provide a company prefix for the management group structure that will be created.",
-                        "postValidation": "Done"
-                    },
-                    "bladeTitle": "Company prefix",
-                    "elements": [
-                        {
-                            "name": "info",
-                            "type": "Microsoft.Common.InfoBox",
-                            "visible": true,
-                            "options": {
-                                "text": "Enterprise-Scale ARM deployment requires access at the tenant root (/) scope. Visit this link to ensure you have the appropriate RBAC permission to complete the deployment",
-                                "uri": "https://docs.microsoft.com/azure/role-based-access-control/elevate-access-global-admin",
-                                "style": "Info"
-                            }
-                        },
+               
                         {
                             "name": "esHub",
                             "type": "Microsoft.Common.OptionsGroup",
@@ -54,19 +36,6 @@
                             },
                             "visible": true
                         },
-                        {
-							"name": "esNwSubSection",
-							"type": "Microsoft.Common.Section",
-							"label": "Connectivity subscription",
-							"elements": [
-								{
-									"type":"Microsoft.Common.SubscriptionSelector",
-									"name": "esNwSub",
-									"label": "Connectivity subscription"
-								}
-							],
-							"visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]"
-            			},
                         {
                             "name": "esAddressHub",
                             "type": "Microsoft.Common.TextBox",
@@ -102,7 +71,7 @@
 
                     ]
                 }
-            ]
+            
         },
         "outputs": {
             "parameters": {
@@ -114,4 +83,3 @@
             "location": "[steps('basics').resourceScope.location.name]"
         }
     }
-}
