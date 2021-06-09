@@ -1,0 +1,210 @@
+{
+    "$schema": "<relative path to createFormUI.schema.json>",
+    "view": {
+        "kind": "Form",
+        "properties": {
+            "title": "Enterprise-Scale Subnet-NSG Creation",
+            "steps": [
+                {
+                    "name": "basics",
+                    "label": "Basics",
+                    "elements": [
+                        {
+                            "name": "resourceScope",
+                            "type": "Microsoft.Common.ResourceScope"
+                        }
+                    ]
+                },
+                {
+                    "name": "lzSettings",
+                    "label": "Enterprise-Scale company prefix",
+                    "subLabel": {
+                        "preValidation": "Provide a company prefix for the management group structure that will be created.",
+                        "postValidation": "Done"
+                    },
+                    "bladeTitle": "Company prefix",
+                    "elements": [
+                        {
+                            "name": "info",
+                            "type": "Microsoft.Common.InfoBox",
+                            "visible": true,
+                            "options": {
+                                "text": "Enterprise-Scale ARM deployment requires access at the tenant root (/) scope. Visit this link to ensure you have the appropriate RBAC permission to complete the deployment",
+                                "uri": "https://docs.microsoft.com/azure/role-based-access-control/elevate-access-global-admin",
+                                "style": "Info"
+                            }
+                        },
+                        {
+                            "name": "esHub",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "label": "Deploy virtual hub network",
+                            "defaultValue": "Yes (recommended)",
+                            "toolTip": "If 'Yes' is selected when also adding a subscription for connectivity, ARM will deploy virtual network for hub",
+                            "constraints": {
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes (recommended)",
+                                        "value": "Yes"
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": "No"
+                                    }
+                                ]
+                            },
+                            "visible": true
+                        },
+                        {
+							"name": "esNwSubSection",
+							"type": "Microsoft.Common.Section",
+							"label": "Connectivity subscription",
+							"elements": [
+								{
+									"type":"Microsoft.Common.SubscriptionSelector",
+									"name": "esNwSub",
+									"label": "Connectivity subscription"
+								}
+							],
+							"visible": "[equals(steps('esConnectivityGoalState').esHub, 'Yes')]"
+            			},
+                        {
+                            "name": "esAddressHub",
+                            "type": "Microsoft.Common.TextBox",
+                            "label": "Address space (required for hub virtual hub)",
+                            "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/16)",
+                            "defaultValue": "10.8.0.0/14",
+                            "visible": "[equals(steps('esConnectivityGoalState').esHub,'Yes')]",
+                            "constraints": {
+                                "required": true,
+                                "validationMessage": "The virtual hubs network's address space, specified as one address prefixes in CIDR notation (e.g. 192.168.1.0/24)"
+                            }
+                        },
+                        {
+                            "name": "esLocationsApi",
+                            "type": "Microsoft.Solutions.ArmApiControl",
+                            "request": {
+                                "method": "GET",
+                                "path": "locations?api-version=2019-11-01"
+                            }
+                        },
+                        {
+                            "name": "esNwLocation",
+                            "type": "Microsoft.Common.DropDown",
+                            "label": "Region for the first virtual network hub",
+                            "filter": true,
+                            "toolTip": "Select the target region for you connectivity deployment (requires you to provide a subscriptionId for connectivity)",
+                            "constraints": {
+                                "allowedValues": "[map(steps('esConnectivityGoalState').esLocationsApi.value,(item) => parse(concat('{\"label\":\"',item.displayName,'\",\"value\":\"',item.name,'\"}')))]",
+                                "required": true
+                            },
+                            "visible": "[equals(steps('esConnectivityGoalState').esHub,'Yes')]"
+                        },
+                        {
+                            "name": "esDdoS",
+                            "type": "Microsoft.Common.OptionsGroup",
+                            "label": "Enable DDoS Protection Standard",
+                            "defaultValue": "No",
+                            "visible": "[equals(steps('esConnectivityGoalState').esHub,'Yes')]",
+                            "toolTip": "If 'Yes' is selected when also adding a connectivity subscription, DDoS Protection Standard will be enabled.",
+                            "constraints": {
+                                "allowedValues": [
+                                    {
+                                        "label": "Yes (recommended)",
+                                        "value": "Yes"
+                                    },
+                                    {
+                                        "label": "No",
+                                        "value": "No"
+                                    }
+                                ]
+                            }
+                        }
+
+                    ]
+                }
+            ]
+        },
+        "outputs": {
+            "parameters": {
+                "subnetMaskForGw": "[steps('esConnectivityGoalState').esAddressVpnOrEr]",
+                "subnetMaskForAzFw": "[steps('esConnectivityGoalState').esAddressFw]",
+                "enableErGw": "[steps('esConnectivityGoalState').esErGw]",
+                "enableVpnGw": "[steps('esConnectivityGoalState').esVpnGw]",
+                "enableHub": "[steps('esConnectivityGoalState').esHub]",
+                "enableDdoS": "[steps('esConnectivityGoalState').esDdoS]",
+                "connectivitySubscriptionId": "[if(not(equals(steps('esConnectivityGoalState').esNwSubSection.esNwSub.subscriptionId,steps('esGoalState').esMgmtSubSection.esMgmtSub.subscriptionId)),steps('esConnectivityGoalState').esNwSubSection.esNwSub.subscriptionId,'')]",
+                "enableAzFw": "[steps('esConnectivityGoalState').esAzFw]",
+                "enableAzFwDnsProxy": "[steps('esConnectivityGoalState').esAzFwDns]",
+                "addressPrefix": "[steps('esConnectivityGoalState').esAddressHub]",
+                "location": "[steps('esConnectivityGoalState').esNwLocation]",
+                "managementSubscriptionId": "[steps('esGoalState').esMgmtSubSection.esMgmtSub.subscriptionId]",
+                "identitySubscriptionId": "[if(or(not(equals(steps('esIdentityGoalState').esIdentitySubSection.esIdentitySub.subscriptionId,steps('esGoalState').esMgmtSubSection.esMgmtSub.subscriptionId)),not(equals(steps('esIdentityGoalState').esIdentitySubSection.esIdentitySub.subscriptionId,steps('esConnectivityGoalState').esNwSubSection.esNwSub.subscriptionId))),steps('esIdentityGoalState').esIdentitySubSection.esIdentitySub.subscriptionId,'')]",
+                "onlineLzSubscriptionId": "[if(or(not(contains(steps('lzGoalState').esOnlineLzSub,steps('esGoalState').esMgmtSubSection.esMgmtSub.subscriptionId)),not(contains(steps('lzGoalState').esOnlineLzSub,steps('esConnectivityGoalState').esNwSubSection.esNwSub.subscriptionId))),steps('lzGoalState').esOnlineLzSub,'')]",
+                "corpLzSubscriptionId": "[if(or(not(contains(steps('lzGoalState').esCorpLzSub,steps('esGoalState').esMgmtSubSection.esMgmtSub.subscriptionId)),not(contains(steps('lzGoalState').esCorpLzSub,steps('esConnectivityGoalState').esNwSubSection.esNwSub.subscriptionId))),steps('lzGoalState').esCorpLzSub,'')]",
+                "enableLogAnalytics": "[steps('esGoalState').esLogAnalytics]",
+                "denyRdpForIdentity": "[steps('esIdentityGoalState').esIdDenyRdp]",
+                "denySubnetWithoutNsgForIdentity": "[steps('esIdentityGoalState').esIdDenySubnetNsg]",
+                "denyPipForIdentity": "[steps('esIdentityGoalState').esIdDenyPublicIp]",
+                "enableVmBackupForIdentity": "[steps('esIdentityGoalState').esIdAzBackup]",
+                "enableAsc": "[steps('esGoalState').esAsc]",
+                "emailContactAsc": "[steps('esGoalState').esAscEmail]",
+                "enableAscForServers": "[steps('esGoalState').esAscVms]",
+                "enableAscForAppServices": "[steps('esGoalState').esAscApps]",
+                "enableAscForStorage": "[steps('esGoalState').esAscStorage]",
+                "enableAscForSql": "[steps('esGoalState').esAscSql]",
+                "enableAscForSqlOnVm": "[steps('esGoalState').esAscSqlOnVm]",
+                "enableAscForKeyVault": "[steps('esGoalState').esAscKeyVault]",
+                "enableAscForArm": "[steps('esGoalState').esAscArm]",
+                "enableAscForDns": "[steps('esGoalState').esAscDns]",
+                "enableAscForKubernetes": "[steps('esGoalState').esAscKubernetes]",
+                "enableAscForRegistries": "[steps('esGoalState').esAscRegistries]",
+                "enableSecuritySolution": "[steps('esGoalState').esSecuritySolution]",
+                "enableAgentHealth": "[steps('esGoalState').esAgentSolution]",
+                "enableChangeTracking": "[steps('esGoalState').esChangeTracking]",
+                "enableUpdateMgmt": "[steps('esGoalState').esUpdateMgmt]",
+                "enableActivityLog": "[steps('esGoalState').esActivityLog]",
+                "enableVmInsights": "[steps('esGoalState').esVmInsights]",
+                "enableServiceMap": "[steps('esGoalState').esServiceMap]",
+                "enableSqlAssessment": "[steps('esGoalState').esSqlAssessment]",
+                "enterpriseScaleCompanyPrefix": "[steps('lzSettings').esMgmtGroup]",
+                "enableSqlAudit": "[steps('lzGoalState').esSqlAudit]",
+                "enableSqlEncryption": "[steps('lzGoalState').esSqlEncryption]",
+                "enableVmBackup": "[steps('lzGoalState').esAzBackup]",
+                "enableLzDdoS": "[steps('lzGoalState').esLzDdoS]",
+                "denyPublicEndpoints": "[steps('lzGoalState').esLzPrivateLink]",
+                "enableEncryptionInTransit": "[steps('lzGoalState').esEncryptionInTransit]",
+                "enableAksPolicy": "[steps('lzGoalState').esAksPolicy]",
+                "denyAksPrivileged": "[steps('lzGoalState').esAksPriv]",
+                "denyAksPrivilegedEscalation": "[steps('lzGoalState').esAksNoPriv]",
+                "denyHttpIngressForAks": "[steps('lzGoalState').esAksIngress]",
+                "denyRdp": "[steps('lzGoalState').esDenyRdp]",
+                "enableStorageHttps": "[steps('lzGoalState').esHttpsStorage]",
+                "denyIpForwarding": "[steps('lzGoalState').esIpForwarding]",
+                "denySubnetWithoutNsg": "[steps('lzGoalState').esNsg]",
+                "retentionInDays": "[string(steps('esGoalState').esLogRetention)]",
+                "enableVmMonitoring": "[steps('lzGoalState').esVmMonitoring]",
+                "enableVmssMonitoring": "[steps('lzGoalState').esVmssMonitoring]",
+                "enableArcMonitoring": "[steps('lzGoalState').esArcVmMonitoring]",
+                "vpnOrErZones": "[steps('esConnectivityGoalState').esGwRegionalOrAz]",
+                "firewallZones": "[steps('esConnectivityGoalState').esFwAz]",
+                "corpConnectedLzSubscriptionId": "[if(or(not(contains(steps('lzGoalState').esCorpLzSub,steps('esGoalState').esMgmtSubSection.esMgmtSub.subscriptionId)),not(contains(steps('lzGoalState').esCorpLzSub,steps('esConnectivityGoalState').esNwSubSection.esNwSub.subscriptionId))),steps('lzGoalState').lzConnectedSubs,'')]",
+                "paToken": "[steps('lzDevOps').esPaToken]",
+                "principalId": "[steps('lzDevOps').spnSection.esServicePrincipal.objectId]",
+                "principalSecret": "[steps('lzDevOps').spnSection.esServicePrincipal.password]",
+                "gitHubUserNameOrOrg": "[steps('lzDevOps').esGit]",
+                "appId": "[steps('lzDevOps').spnSection.esServicePrincipal.appId]",
+                "enableAzOps": "[steps('lzDevOps').cicdOption]",
+                "subscriptionId": "[steps('esGoalState').esMgmtSubSection.esMgmtSub.subscriptionId]",
+                "repositoryName": "[steps('lzDevOps').esGitRepoName]",
+                "gwRegionalOrAz": "[steps('esConnectivityGoalState').esGwRegionalOrAz]",
+                "gwAzSku": "[steps('esConnectivityGoalState').esGwAzSku]",
+                "gwRegionalSku": "[if(empty(steps('esConnectivityGoalState').esGwRegionalSku), steps('esConnectivityGoalState').esGwNoAzSku, steps('esConnectivityGoalState').esGwRegionalSku)]",
+                "erRegionalOrAz": "[steps('esConnectivityGoalState').esErRegionalOrAz]",
+                "erAzSku": "[steps('esConnectivityGoalState').esErAzSku]",
+                "erRegionalSku": "[if(empty(steps('esConnectivityGoalState').esErRegionalSku), steps('esConnectivityGoalState').esErNoAzSku, steps('esConnectivityGoalState').esErRegionalSku)]"
+            },
+            "kind": "Tenant",
+            "location": "[steps('basics').resourceScope.location.name]"
+        }
+    }
+}
