@@ -47,25 +47,6 @@
                             }
                         },
                         {
-                            "name": "esLzConnectivity",
-                            "type": "Microsoft.Common.OptionsGroup",
-                            "label": "Connect corp landing zones to the connectivity hub (optional)?",
-                            "toolTip": "If 'Yes' is selected for corp landing zones, ARM will connect the subscriptions to the hub virtual network via VNet peering.",
-                            "constraints": {
-                                "allowedValues": [
-                                    {
-                                        "label": "Yes (recommended)",
-                                        "value": "Yes"
-                                    },
-                                    {
-                                        "label": "No",
-                                        "value": "No"
-                                    }
-                                ]
-                            }
-                           
-                        },
-                        {
                             "name": "lzCorpSubsApi",
                             "type": "Microsoft.Solutions.ArmApiControl",
                             "request": {
@@ -184,18 +165,6 @@
                             "constraints": {
                                 "allowedValues": "[map(steps('lzGoalState').lzOnlineSubsApi.value,(sub) => parse(concat('{\"label\":\"',sub.displayName,'\",\"description\":\"',sub.subscriptionId,'\",\"value\":\"',toLower(sub.subscriptionId),'\"}')))]",
                                 "required": false
-                            }
-                        },
-                        {
-                            "name": "azMonText",
-                            "type": "Microsoft.Common.TextBlock",
-                            "visible": true,
-                            "options": {
-                                "text": "Select which of the the recommended policies you will assign to your landing zones.",
-                                "link": {
-                                    "label": "Learn more",
-                                    "uri": "https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/enterprise-scale/design-principles#policy-driven-governance"
-                                }
                             }
                         }
 
