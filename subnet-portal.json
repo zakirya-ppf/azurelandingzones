@@ -50,7 +50,6 @@
                             "name": "esLzConnectivity",
                             "type": "Microsoft.Common.OptionsGroup",
                             "label": "Connect corp landing zones to the connectivity hub (optional)?",
-                            "defaultValue": "[if(equals(steps('esConnectivityGoalState').esHub,'Yes'),'Yes (recommended)','No')]",
                             "toolTip": "If 'Yes' is selected for corp landing zones, ARM will connect the subscriptions to the hub virtual network via VNet peering.",
                             "constraints": {
                                 "allowedValues": [
