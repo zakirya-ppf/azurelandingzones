@@ -93,7 +93,6 @@
                             "type": "Microsoft.Common.EditableGrid",
                             "ariaLabel": "Add existing subscriptions into the management group landing zone and provide address space for virtual network peering",
                             "label": "Corp connected landing zone subscriptions (optional)",
-                            "visible": "[equals(steps('lzGoalState').esLzConnectivity,'Yes')]",
                             "constraints": {
                                 "width": "Full",
                                 "rows": {
