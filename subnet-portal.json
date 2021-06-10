@@ -63,7 +63,7 @@
                                         "value": "No"
                                     }
                                 ]
-                            },
+                            }
                            
                         },
                         {
@@ -84,7 +84,6 @@
                             "filter": true,
                             "filterPlaceholder": "Filter items ...",
                             "multiLine": true,
-                            "visible": "[or(equals(steps('esConnectivityGoalState').esHub,'No'),equals(steps('lzGoalState').esLzConnectivity,'No'))]",
                             "constraints": {
                                 "allowedValues": "[map(steps('lzGoalState').lzCorpSubsApi.value,(sub) => parse(concat('{\"label\":\"',sub.displayName,'\",\"description\":\"',sub.subscriptionId,'\",\"value\":\"',toLower(sub.subscriptionId),'\"}')))]",
                                 "required": false
@@ -210,7 +209,7 @@
         },
         "outputs": {
             "parameters": {
-                "subnetMaskForGw": "[steps('esConnectivityGoalState').esAddressVpnOrEr]"
+                "subnetMaskForGw": "[steps('lzGoalState').esOnlineLzSub]"
             },
             "kind": "Tenant",
             "location": "[steps('basics').resourceScope.location.name]"
