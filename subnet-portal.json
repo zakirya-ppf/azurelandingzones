@@ -119,6 +119,40 @@
                                                 ]
                                             }
                                         }
+                                    },
+                                    {
+                                        "id": "subnetname",
+                                        "header": "Subnet Name",
+                                        "width": "1fr",
+                                        "element": {
+                                            "type": "Microsoft.Common.TextBox",
+                                            "placeholder": "Ensure there are no overlapping IP addresses!",
+                                            "constraints": {
+                                                "required": true,
+                                                "validations": [
+                                                    {
+                                                        "message": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "id": "nsgname",
+                                        "header": "Network Security Group Name",
+                                        "width": "1fr",
+                                        "element": {
+                                            "type": "Microsoft.Common.TextBox",
+                                            "placeholder": "Ensure there are no overlapping IP addresses!",
+                                            "constraints": {
+                                                "required": true,
+                                                "validations": [
+                                                    {
+                                                        "message": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
+                                                    }
+                                                ]
+                                            }
+                                        }
                                     }
                                 ]
                             }
