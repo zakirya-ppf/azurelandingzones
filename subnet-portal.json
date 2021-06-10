@@ -1531,26 +1531,6 @@
                                     }
                                 ]
                             }
-                        },
-                        {
-                            "name": "esAksIngress",
-                            "type": "Microsoft.Common.OptionsGroup",
-                            "label": "Ensure HTTPS ingress is enforced in Kubernetes clusters",
-                            "defaultValue": "Yes (recommended)",
-                            "toolTip": "If 'Yes' is selected, HTTPS ingress will be required in AKS",
-                            "constraints": {
-                                "allowedValues": [
-                                    {
-                                        "label": "Yes (recommended)",
-                                        "value": "Yes"
-                                    },
-                                    {
-                                        "label": "No",
-                                        "value": "No"
-                                    }
-                                ]
-                            },
-                            "visible": true
                         }
 
 
