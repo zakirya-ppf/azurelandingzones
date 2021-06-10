@@ -64,7 +64,7 @@
                                     }
                                 ]
                             },
-                            "visible": "[equals(steps('esConnectivityGoalState').esHub,'Yes')]"
+                           
                         },
                         {
                             "name": "lzCorpSubsApi",
