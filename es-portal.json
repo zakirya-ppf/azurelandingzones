@@ -759,7 +759,7 @@
                             "type": "Microsoft.Common.TextBox",
                             "label": "Address space (required for hub virtual hub)",
                             "toolTip": "Provide address prefix in CIDR notation (e.g 10.100.0.0/16)",
-                            "defaultValue": "10.8.0.0/14",
+                            "defaultValue": "10.8.0.0/18",
                             "visible": "[equals(steps('esConnectivityGoalState').esHub,'Yes')]",
                             "constraints": {
                                 "required": true,
