@@ -554,7 +554,10 @@
                                             "type": "Microsoft.Network/routeTables",
                                             "apiVersion": "2020-11-01",
                                             "name": "rt-uks-cs-01",
-                                            "location": "uksouth", 
+                                            "location": "uksouth",
+                                            "dependsOn": [
+                                                "[variables('azFwIpName')]"         
+                                            ], 
                                             "tags": {},  
                                         
                                         "properties": {
@@ -767,6 +770,10 @@
             "apiVersion": "2018-10-01",
             "name": "bst-uks-p-hub-01",
             "location": "uksouth",
+            "dependsOn": [
+                "[variables('azBastionId')]", 
+                "[variables('BastionPipId')]"          
+            ],
             "properties": {
                 "ipConfigurations": [
                     {
