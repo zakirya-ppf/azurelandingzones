@@ -751,7 +751,8 @@
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
                                             "location": "[parameters('location')]",
                                             "dependsOn": [
-                                                "[variables('BastionNSG')]"
+                                                "[variables('BastionNSG')]",
+                                                "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
                                                 
                                             ],
                                             "properties": {
@@ -772,7 +773,8 @@
             "location": "uksouth",
             "dependsOn": [
                 "[variables('azBastionId')]", 
-                "[variables('BastionPipId')]"          
+                "[variables('BastionPipId')]",
+                "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"          
             ],
             "properties": {
                 "ipConfigurations": [
