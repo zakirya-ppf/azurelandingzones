@@ -99,7 +99,23 @@
         },
         "subnetMaskForBastion": {
             "type": "string",
-            "defaultValue": "10.8.0.32/27",
+            "defaultValue": "10.8.0.32/27"
+        },
+        "subnetMaskForServices": {
+            "type": "string",
+            "defaultValue": "10.8.2.0/24"
+        },
+        "subnetMaskForBlackrock": {
+            "type": "string",
+            "defaultValue": "10.8.0.128/27"
+        },
+        "subnetMaskForExpressroute": {
+            "type": "string",
+            "defaultValue": "10.8.0.224/28"
+        },
+        "subnetMaskForRemoteaccess": {
+            "type": "string",
+            "defaultValue": "10.8.0.240/28"
         },
         "subnetMaskForAzFw": {
             "type": "string",
@@ -159,6 +175,10 @@
         "erGwName": "[concat(parameters('topLevelManagementGroupPrefix'), '-ergw-', parameters('location'))]",
         "rgName": "rg-uks-p-hub-01",
         "BastionNSG": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/networkSecurityGroups/nsg-uks-bat-01')]",
+        "ServicesNSG": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/networkSecurityGroups/nsg-uks-sn-mhub-services')]",
+        "BlackrockNSG": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/networkSecurityGroups/nsg-uks-sn-mhub-blackrock')]",
+        "ExpressrouteNSG": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/networkSecurityGroups/nsg-uks-sn-mhub-expressroute')]",
+        "RemoteaccessNSG": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/networkSecurityGroups/nsg-uks-sn-mhub-remoteaccess')]",
         "dDoSRgName": "rg-ddos-uks-p-hub-01",
         "dDoSName": "ddos-uks-01",
         "azFwPolicyName": "policy-uks-p-fw-01",
@@ -172,9 +192,13 @@
         "azErGwSubnetId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/GatewaySubnet')]",
         "azErGwPipId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azErGwIpName'))]",
         "azBastionId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/AzureBastionSubnet')]",
+        "azServicesSubnetID": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/sn-mhub-services')]",
+        "azBlackrockSubnetID": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/sn-mhub-blackrock')]",
+        "azExpressrouteSubnetID": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/sn-mhub-expressroute')]",
+        "azRemoteaccessSubnetID": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/sn-mhub-remoteaccess')]",
         "azFwSubnetId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/AzureFirewallSubnet')]",
         "azFwPipId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azFwIpName'))]",
-        "BastionPipId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'), '/providers/Microsoft.Network/publicIPAddresses/pip-bat-uks-p-hub-01')]",
+        "BastionPipId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'), '/providers/Microsoft.Network/publicIPAddresses/pip-uks-p-bat-hub-01')]",
         "resourceDeploymentName": "[take(concat(deployment().name, '-hubspoke', deployment().location), 64)]",
         "dDosResourceDeploymentName": "[take(concat(deployment().name, 'ddos', deployment().location), 64)]",
         // Creating variable that later will be used in conjunction with the union() function to cater for conditional subnet creation while ensuring idempotency
@@ -199,6 +223,38 @@
                 "name": "AzureBastionSubnet",
                 "properties": {
                     "addressPrefix": "[parameters('subnetMaskForBastion')]"
+                }
+            }
+        ],
+        "Servicessubnet": [
+            {
+                "name": "sn-mhub-services",
+                "properties": {
+                    "addressPrefix": "[parameters('subnetMaskForServices')]"
+                }
+            }
+        ],
+        "Blackrocksubnet": [
+            {
+                "name": "sn-mhub-blackrock",
+                "properties": {
+                    "addressPrefix": "[parameters('subnetMaskForBlackrock')]"
+                }
+            }
+        ],
+        "Expressroutesubnet": [
+            {
+                "name": "sn-mhub-expressroute",
+                "properties": {
+                    "addressPrefix": "[parameters('subnetMaskForExpressroute')]"
+                }
+            }
+        ],
+        "Remoteaccesssubnet": [
+            {
+                "name": "sn-mhub-remoteaccess",
+                "properties": {
+                    "addressPrefix": "[parameters('subnetMaskForRemoteaccess')]"
                 }
             }
         ],
@@ -361,10 +417,21 @@
                                                                     if(
                                                                       not(
                                                                           empty(parameters('subnetMaskForBastion'))), variables('BastionSubnet'), json('[]')),
-                                                                
                                                                           if(
+                                                                          not(
+                                                                              empty(parameters('subnetMaskForServices'))), variables('Servicessubnet'), json('[]')),
+                                                                              if(
                                                                               not(
-                                                                                  empty(parameters('subnetMaskForAzFw'))), variables('fwSubnet'), json('[]')))]",
+                                                                                  empty(parameters('subnetMaskForBlackrock'))), variables('Blackrocksubnet'), json('[]')),
+                                                                                  if(
+                                                                                  not(
+                                                                                      empty(parameters('subnetMaskForExpressroute'))), variables('Expressroutesubnet'), json('[]')),
+                                                                                      if(
+                                                                                      not(
+                                                                                          empty(parameters('subnetMaskForRemoteaccess'))), variables('Remoteaccesssubnet'), json('[]')),
+                                                                                            if(
+                                                                                                not(
+                                                                                                    empty(parameters('subnetMaskForAzFw'))), variables('fwSubnet'), json('[]')))]",
                                                 "enableDdosProtection": "[if(equals(parameters('enableDdoS'), 'Yes'), 'true', 'false')]",
                                                 "ddosProtectionPlan": "[if(equals(parameters('enableDdoS'), 'Yes'), variables('ddosProtectionPlanId'), json('null'))]"
                                             }
@@ -515,7 +582,10 @@
                                             "location": "[parameters('location')]",
                                             "properties": {
                                                 "dnsSettings": "[if(equals(parameters('enableAzFwDnsProxy'), 'Yes'), variables('azFirewallDnsSettings'), json('null'))]"
-                                            }
+                                            },
+                                            "sku": {
+                                                "tier": "Premium"
+                                              }
                                         },
                                         {
                                             "condition": "[and(equals(parameters('enableAzFw'), 'Yes'), not(empty(parameters('subnetMaskForAzFw'))))]",
@@ -543,17 +613,20 @@
                                                         }
                                                     }
                                                 ],
-                                                "firewallPolicy": "[variables('azFirewallPolicyId')]",
-
+                                                "firewallPolicy": {
+                                                    "id": "[variables('azFirewallPolicyId')]"
+                                                },
                                                 "sku": {
-                                                "tier": "Premium"
-                                                        }
+                                                    "name": "[variables('azFwName')]",
+                                                    "tier": "Premium"
+                                                }
+                                                
                                             }
                                         },
                                         {
                                             "type": "Microsoft.Network/routeTables",
                                             "apiVersion": "2020-11-01",
-                                            "name": "rt-uks-cs-01",
+                                            "name": "rt-uk-hub-default",
                                             "location": "uksouth",
                                             "dependsOn": [
                                                 "[variables('azFwIpName')]"         
@@ -564,7 +637,7 @@
                                                    "disableBgpRoutePropagation": false,
                                                     "routes": [
                                                      {
-                                                "name": "rt-uks-cs-01",
+                                                "name": "rt-uk-hub-default",
                                                 "properties": {
                                                  "addressPrefix": "0.0.0.0/0",
                                                 "nextHopType": "VirtualAppliance",
@@ -572,6 +645,24 @@
                                                 "hasBgpOverride": false
                                                             }
                                                      }
+                                                            ]
+
+                                                    }
+                                        },
+                                        {
+                                            "type": "Microsoft.Network/routeTables",
+                                            "apiVersion": "2020-11-01",
+                                            "name": "rt-uks-hub-vpngw",
+                                            "location": "uksouth",
+                                            "dependsOn": [
+                                                "[variables('azFwIpName')]"         
+                                            ], 
+                                            "tags": {},  
+                                        
+                                        "properties": {
+                                                   "disableBgpRoutePropagation": false,
+                                                    "routes": [
+         
                                                             ]
 
                                                     }
@@ -730,10 +821,50 @@
       }
     },
 
+    {
+        "type": "Microsoft.Network/networkSecurityGroups",
+        "name": "nsg-uks-sn-mhub-services",
+        "location": "uksouth",
+        "apiVersion": "2020-05-01",
+        "properties": {
+          "securityRules": []
+        }
+      },
+
+      {
+        "type": "Microsoft.Network/networkSecurityGroups",
+        "name": "nsg-uks-sn-mhub-blackrock",
+        "location": "uksouth",
+        "apiVersion": "2020-05-01",
+        "properties": {
+          "securityRules": []
+        }
+      },
+
+      {
+        "type": "Microsoft.Network/networkSecurityGroups",
+        "name": "nsg-uks-sn-mhub-expressroute",
+        "location": "uksouth",
+        "apiVersion": "2020-05-01",
+        "properties": {
+          "securityRules": []
+        }
+      },
+
+      {
+        "type": "Microsoft.Network/networkSecurityGroups",
+        "name": "nsg-uks-sn-mhub-remoteaccess",
+        "location": "uksouth",
+        "apiVersion": "2020-05-01",
+        "properties": {
+          "securityRules": []
+        }
+      },
+
                                                 {
                                                 "apiVersion": "2020-11-01",
                                                 "type": "Microsoft.Network/publicIPAddresses",
-                                                "name": "pip-bat-uks-p-hub-01",
+                                                "name": "pip-uks-p-bat-hub-01",
                                                 "location": "uksouth",
                                                 "sku": {
                                                 "name": "Standard"
@@ -764,7 +895,80 @@
                                                         }
                                                     },
 
+    {
+                                            "apiVersion": "2020-05-01",
+                                            "name": "vn-uks-p-hub-01/sn-mhub-services",
+                                            "type": "Microsoft.Network/virtualNetworks/subnets",
+                                            "location": "[parameters('location')]",
+                                            "dependsOn": [
+                                                    "[variables('ServicesNSG')]",
+                                                    "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
+                                                            
+                                            ],
+                                            "properties": {
+                                                           
+                                                            "addressPrefix": "[parameters('subnetMaskForServices')]",
+                                                            "networkSecurityGroup": {
+                                                                "id": "[variables('ServicesNSG')]"
+                                                                    }
+                                                             }
+                                                    },
 
+    {
+                                            "apiVersion": "2020-05-01",
+                                            "name": "vn-uks-p-hub-01/sn-mhub-blackrock",
+                                            "type": "Microsoft.Network/virtualNetworks/subnets",
+                                            "location": "[parameters('location')]",
+                                            "dependsOn": [
+                                                    "[variables('BlackrockNSG')]",
+                                                    "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
+                                                                        
+                                            ],
+                                             "properties": {
+                                                                       
+                                                            "addressPrefix": "[parameters('subnetMaskForBlackrock')]",
+                                                            "networkSecurityGroup": {
+                                                                "id": "[variables('BlackrockNSG')]"
+                                                                    }
+                                                            }
+                                                     },
+    {
+                                            "apiVersion": "2020-05-01",
+                                            "name": "vn-uks-p-hub-01/sn-mhub-expressroute",
+                                            "type": "Microsoft.Network/virtualNetworks/subnets",
+                                            "location": "[parameters('location')]",
+                                            "dependsOn": [
+                                                    "[variables('ExpressrouteNSG')]",
+                                                    "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
+                                                                                    
+                                            ],
+                                            "properties": {
+                                                                                   
+                                                            "addressPrefix": "[parameters('subnetMaskForExpressroute')]",
+                                                            "networkSecurityGroup": {
+                                                                "id": "[variables('ExpressrouteNSG')]"
+                                                                    }
+                                                            }
+                                                    },
+    {
+                                            "apiVersion": "2020-05-01",
+                                            "name": "vn-uks-p-hub-01/sn-mhub-remoteaccess",
+                                            "type": "Microsoft.Network/virtualNetworks/subnets",
+                                            "location": "[parameters('location')]",
+                                            "dependsOn": [
+                                                    "[variables('RemoteaccessNSG')]",
+                                                    "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
+                                                                                                
+                                            ],
+                                            "properties": {
+                                                                                               
+                                                            "addressPrefix": "[parameters('subnetMaskForRemoteaccess')]",
+                                                            "networkSecurityGroup": {
+                                                                "id": "[variables('RemoteaccessNSG')]"
+                                                                    }
+                                                            }
+                                                    },
+            
 
                                             {
             "type": "Microsoft.Network/bastionHosts",
