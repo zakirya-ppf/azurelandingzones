@@ -419,16 +419,16 @@
                                                                           empty(parameters('subnetMaskForBastion'))), variables('BastionSubnet'), json('[]')),
                                                                           if(
                                                                           not(
-                                                                              empty(parameters('subnetMaskForServices'))), variables('sn-mhub-services'), json('[]')),
+                                                                              empty(parameters('subnetMaskForServices'))), variables('Servicessubnet'), json('[]')),
                                                                               if(
                                                                               not(
-                                                                                  empty(parameters('subnetMaskForBlackrock'))), variables('sn-mhub-blackrock'), json('[]')),
+                                                                                  empty(parameters('subnetMaskForBlackrock'))), variables('Blackrocksubnet'), json('[]')),
                                                                                   if(
                                                                                   not(
-                                                                                      empty(parameters('subnetMaskForExpressroute'))), variables('sn-mhub-expressroute'), json('[]')),
+                                                                                      empty(parameters('subnetMaskForExpressroute'))), variables('Expressroutesubnet'), json('[]')),
                                                                                       if(
                                                                                       not(
-                                                                                          empty(parameters('subnetMaskForRemoteaccess'))), variables('sn-mhub-remoteaccess'), json('[]')),
+                                                                                          empty(parameters('subnetMaskForRemoteaccess'))), variables('Remoteaccesssubnet'), json('[]')),
                                                                                             if(
                                                                                                 not(
                                                                                                     empty(parameters('subnetMaskForAzFw'))), variables('fwSubnet'), json('[]')))]",
