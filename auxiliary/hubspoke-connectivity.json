@@ -613,9 +613,8 @@
                                                         }
                                                     }
                                                 ],
-                                                "firewallPolicy": {
-                                                    "id": "[variables('azFirewallPolicyId')]"
-                                                },
+                                                "firewallPolicy": "[variables('azFirewallPolicyId')]"
+                                                
                                                 "sku": {
                                                     "name": "[variables('azFwName')]",
                                                     "tier": "Premium"
