@@ -892,6 +892,26 @@
                                                             }
                                                         }
                                                     },
+    {
+                                            "apiVersion": "2020-05-01",
+                                            "name": "vn-uks-p-hub-01/sn-mhub-services",
+                                            "type": "Microsoft.Network/virtualNetworks/subnets",
+                                            "location": "[parameters('location')]",
+                                            "dependsOn": [
+                                                    "[variables('ServicesNSG')]",
+                                                    "[variables('azBastionId')]",
+                                                    "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
+                                                    
+                                                            
+                                            ],
+                                            "properties": {
+                                                           
+                                                            "addressPrefix": "[parameters('subnetMaskForServices')]",
+                                                            "networkSecurityGroup": {
+                                                                "id": "[variables('ServicesNSG')]"
+                                                                    }
+                                                             }
+                                                    },
             
 
                                             {
