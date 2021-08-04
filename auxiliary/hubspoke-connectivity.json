@@ -912,6 +912,63 @@
                                                                     }
                                                              }
                                                     },
+  {
+                                            "apiVersion": "2020-05-01",
+                                            "name": "vn-uks-p-hub-01/sn-mhub-blackrock",
+                                            "type": "Microsoft.Network/virtualNetworks/subnets",
+                                            "location": "[parameters('location')]",
+                                            "dependsOn": [
+                                                    "[variables('BlackrockNSG')]",
+                                                    "[variables('azServicesSubnetID')]",
+                                                    "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
+                                                                        
+                                            ],
+                                             "properties": {
+                                                                       
+                                                            "addressPrefix": "[parameters('subnetMaskForBlackrock')]",
+                                                            "networkSecurityGroup": {
+                                                                "id": "[variables('BlackrockNSG')]"
+                                                                    }
+                                                            }
+                                                     },
+    {
+                                            "apiVersion": "2020-05-01",
+                                            "name": "vn-uks-p-hub-01/sn-mhub-expressroute",
+                                            "type": "Microsoft.Network/virtualNetworks/subnets",
+                                            "location": "[parameters('location')]",
+                                            "dependsOn": [
+                                                    "[variables('ExpressrouteNSG')]",
+                                                    "[variables('azBlackrockSubnetID')]",
+                                                    "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
+                                                                                    
+                                            ],
+                                            "properties": {
+                                                                                   
+                                                            "addressPrefix": "[parameters('subnetMaskForExpressroute')]",
+                                                            "networkSecurityGroup": {
+                                                                "id": "[variables('ExpressrouteNSG')]"
+                                                                    }
+                                                            }
+                                                    },
+    {
+                                            "apiVersion": "2020-05-01",
+                                            "name": "vn-uks-p-hub-01/sn-mhub-remoteaccess",
+                                            "type": "Microsoft.Network/virtualNetworks/subnets",
+                                            "location": "[parameters('location')]",
+                                            "dependsOn": [
+                                                    "[variables('RemoteaccessNSG')]",
+                                                    "[variables('azExpressrouteSubnetID')]",
+                                                    "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
+                                                                                                
+                                            ],
+                                            "properties": {
+                                                                                               
+                                                            "addressPrefix": "[parameters('subnetMaskForRemoteaccess')]",
+                                                            "networkSecurityGroup": {
+                                                                "id": "[variables('RemoteaccessNSG')]"
+                                                                    }
+                                                            }
+                                                    },
             
 
                                             {
