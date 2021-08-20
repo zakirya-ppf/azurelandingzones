@@ -50,7 +50,7 @@
                         }
                     }
                 ]
-            },
+            }
         ],
         "outputs": {
             "enterpriseScaleCompanyPrefix": "[steps('lzSettings').esMgmtGroup]"
