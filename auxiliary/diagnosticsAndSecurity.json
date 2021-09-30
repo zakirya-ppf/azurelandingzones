@@ -299,7 +299,7 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
                 "parameters": {
                     "logAnalytics": {
-                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-uks-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-uks-cs-01'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-ukw-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-ukw-cs-01'))]"
                     },
                     "logsEnabled": {
                         "value": "True"
@@ -339,7 +339,7 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
                 "parameters": {
                     "logAnalytics_1": {
-                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-uks-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-uks-cs-01'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-ukw-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-ukw-cs-01'))]"
                     }
                 }
             }
@@ -376,7 +376,7 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
                 "parameters": {
                     "logAnalytics_1": {
-                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-uks-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-uks-cs-01'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-ukw-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-ukw-cs-01'))]"
                     }
                 }
             }
@@ -413,7 +413,7 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
                 "parameters": {
                     "logAnalytics": {
-                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-uks-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-uks-cs-01'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-ukw-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-ukw-cs-01'))]"
                     }
                 }
             }
@@ -450,7 +450,7 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
                 "parameters": {
                     "logAnalytics": {
-                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-uks-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-uks-cs-01'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-ukw-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-ukw-cs-01'))]"
                     }
                 }
             }
@@ -487,7 +487,7 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'))]",
                 "parameters": {
                     "logAnalytics": {
-                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-uks-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-uks-cs-01'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-ukw-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-ukw-cs-01'))]"
                     }
                 }
             }
@@ -527,10 +527,10 @@
                         "value": "[parameters('emailContactAsc')]"
                     },
                     "logAnalytics": {
-                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-uks-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-uks-cs-01'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-ukw-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-ukw-cs-01'))]"
                     },
                     "ascExportResourceGroupName": {
-                        "value": "rg-uks-asc-export"
+                        "value": "rg-ukw-asc-export"
                     },
                     "ascExportResourceGroupLocation": {
                         "value": "[deployment().location]"
@@ -726,7 +726,7 @@
                         "value": "[parameters('topLevelManagementGroupPrefix')]"
                     },
                     "workspaceResourceId":{
-                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-uks-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-uks-cs-01'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-ukw-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-ukw-cs-01'))]"
                     }
                 }
             }
@@ -786,7 +786,7 @@
                         "value": "[parameters('topLevelManagementGroupPrefix')]"
                     },
                     "workspaceResourceId":{
-                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-uks-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-uks-cs-01'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-ukw-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-ukw-cs-01'))]"
                     }
                 }
             }
@@ -846,7 +846,7 @@
                         "value": "[parameters('topLevelManagementGroupPrefix')]"
                     },
                     "workspaceResourceId":{
-                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-uks-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-uks-cs-01'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-ukw-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-ukw-cs-01'))]"
                     }
                 }
             }
@@ -973,7 +973,7 @@
                         "value": "[parameters('topLevelManagementGroupPrefix')]"
                     },
                     "workspaceResourceId":{
-                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-uks-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-uks-cs-01'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-ukw-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-ukw-cs-01'))]"
                     }
                 }
             }
@@ -1037,7 +1037,7 @@
                         "value": "[parameters('topLevelManagementGroupPrefix')]"
                     },
                     "workspaceResourceId":{
-                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-uks-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-uks-cs-01'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-ukw-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-ukw-cs-01'))]"
                     }
                 }
             }
@@ -1101,7 +1101,7 @@
                         "value": "[parameters('topLevelManagementGroupPrefix')]"
                     },
                     "workspaceResourceId":{
-                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-uks-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-uks-cs-01'))]"
+                        "value": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-ukw-cs-01', '/providers/Microsoft.OperationalInsights/workspaces/', 'la-ukw-cs-01'))]"
                     }
                 }
             }

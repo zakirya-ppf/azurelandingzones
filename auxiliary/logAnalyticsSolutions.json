@@ -17,7 +17,7 @@
         },
         "workspaceName": {
             "type": "string",
-            "defaultValue": "la-uks-cs-01",
+            "defaultValue": "la-ukw-cs-01",
             "metadata": {
                 "description": "Provide resource name for the Log Analytics workspace. When deployed using ES RI, this name it provided deterministically based on ESLZ prefix."
             }
@@ -119,7 +119,7 @@
         }
     },
     "variables": {
-        "laResourceId": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-uks-cs-01','/providers/Microsoft.OperationalInsights/workspaces/', 'la-uks-cs-01'))]",
+        "laResourceId": "[toLower(concat('/subscriptions/', parameters('managementSubscriptionId'), '/resourceGroups/', 'rg-ukw-cs-01','/providers/Microsoft.OperationalInsights/workspaces/', 'la-ukw-cs-01'))]",
         "solutions": {
             "security": {
                 "name": "[concat('Security', '(', parameters('workspaceName'), ')')]",
@@ -164,7 +164,7 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "name": "[take(concat('EntScale-', 'solutions-', guid(deployment().name)), 63)]",
-            "resourceGroup": "rg-uks-cs-01",
+            "resourceGroup": "rg-ukw-cs-01",
             "properties": {
                 "mode": "Incremental",
                 "template": {

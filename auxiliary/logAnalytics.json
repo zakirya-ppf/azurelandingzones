@@ -65,10 +65,10 @@
                 "scope": "[concat('/providers/Microsoft.Management/managementGroups/', parameters('topLevelManagementGroupPrefix'), '-management')]",
                 "parameters": {
                     "workspaceName": {
-                        "value": "la-uks-cs-01"
+                        "value": "la-ukw-cs-01"
                     },
                     "automationAccountName": {
-                        "value": "aa-uks-cs-01"
+                        "value": "aa-ukw-cs-01"
                     },
                     "workspaceRegion": {
                         "value": "[deployment().location]"
@@ -77,7 +77,7 @@
                         "value": "[deployment().location]"
                     },
                     "rgName": {
-                        "value": "rg-uks-cs-01"
+                        "value": "rg-ukw-cs-01"
                     },
                     "retentionInDays": {
                         "value": "[parameters('retentionInDays')]"

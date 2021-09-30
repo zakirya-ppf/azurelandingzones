@@ -8,19 +8,19 @@
             "maxLength": 36
         },
         "bastion-host-name": {
-        "value": "vm-uks-p-bastion-01"
+        "value": "vm-ukw-p-bastion-01"
         },
         "location": {
-        "value": "uksouth"
+        "value": "ukwest"
         }
 
     },
     "variables": {
-        "vnet-name": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', 'rg-uks-p-hub-01', '/providers/Microsoft.Network/virtualNetworks/', 'vn-uks-p-hub-01')]",
-        "public-ip-address-name": "'pip-uks-p-bastion-01')",
+        "vnet-name": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', 'rg-ukw-p-hub-01', '/providers/Microsoft.Network/virtualNetworks/', 'vn-ukw-p-hub-01')]",
+        "public-ip-address-name": "'pip-ukw-p-bastion-01')",
         "bastion-subnet-name": "AzureBastionSubnet",
-        "bastion-subnet-ip-prefix": "10.8.0.32/27",
-        "nsg-name": "'nsg-uks-p-bastion-01')]"
+        "bastion-subnet-ip-prefix": "10.12.0.32/27",
+        "nsg-name": "'nsg-ukw-p-bastion-01')]"
     },
     "resources": [
        {
