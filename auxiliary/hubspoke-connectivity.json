@@ -446,7 +446,7 @@
                                                 "name": "[if(equals(parameters('gwRegionalOrAz'), 'Zone'), 'Basic', 'Standard')]"
                                             },                          
                                             "properties": {
-                                                "publicIPAllocationMethod": "[if(equals(parameters('gwRegionalOrAz'), 'Zone'), 'Static', 'Dynamic')]"
+                                                "publicIPAllocationMethod": "[if(equals(parameters('gwRegionalOrAz'), 'Zone'), 'Dynamic', 'Static')]"
                                             }
                                         },
                                         {
