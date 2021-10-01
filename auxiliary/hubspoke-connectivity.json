@@ -443,10 +443,10 @@
                                             "location": "[parameters('location')]",
                                             "name": "[variables('azVpnGwIpName')]",
                                             "sku": {
-                                                "name": "[if(equals(parameters('gwRegionalOrAz'), 'Zone'), 'Basic', 'Standard')]"
+                                                "name": "Basic"
                                             },                          
                                             "properties": {
-                                                "publicIPAllocationMethod": "[if(equals(parameters('gwRegionalOrAz'), 'Zone'), 'Dynamic', 'Static')]"
+                                                "publicIPAllocationMethod": "Static')]"
                                             }
                                         },
                                         {
@@ -467,7 +467,7 @@
                                                     {
                                                         "name": "default",
                                                         "properties": {
-                                                            "privateIPAllocationMethod": "Dynamic",
+                                                            "privateIPAllocationMethod": "Static",
                                                             "subnet": {
                                                                 "id": "[variables('azVpnGwSubnetId')]"
                                                             },
