@@ -624,7 +624,7 @@
                                         {
                                             "type": "Microsoft.Network/routeTables",
                                             "apiVersion": "2020-11-01",
-                                            "name": "rt-uk-hub-default",
+                                            "name": "rt-ukw-hub-default",
                                             "location": "ukwest",
                                             "dependsOn": [
                                                 "[variables('azFwIpName')]"         
