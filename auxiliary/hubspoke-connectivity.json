@@ -1024,7 +1024,7 @@
                                             ],
                                             "properties": {
                                                                                    
-                                                            "addressPrefix": "[parameters('subnetMaskForProdServices')]",
+                                                            "addressPrefix": "[parameters('subnetMaskForDevTestServices')]",
                                                             "networkSecurityGroup": {
                                                                 "id": "[variables('DevTestServicesNSG')]"
                                                                     }
