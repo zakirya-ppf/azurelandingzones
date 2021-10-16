@@ -101,21 +101,33 @@
             "type": "string",
             "defaultValue": "10.12.0.32/27"
         },
-        "subnetMaskForServices": {
+        "subnetMaskForMgmtServices": {
             "type": "string",
-            "defaultValue": "10.12.2.0/24"
+            "defaultValue": "10.12.2.0/26"
         },
-        "subnetMaskForBlackrock": {
+        "subnetMaskForProdServices": {
             "type": "string",
-            "defaultValue": "10.12.0.128/27"
+            "defaultValue": "10.12.2.64/26"
+        },
+        "subnetMaskForDevTestServices": {
+            "type": "string",
+            "defaultValue": "10.12.2.192/26"
+        },
+        "subnetMaskForUATServices": {
+            "type": "string",
+            "defaultValue": "10.12.2.128/26"
+        },
+        "subnetMaskForKeyVault": {
+            "type": "string",
+            "defaultValue": "10.12.4.0/24"
         },
         "subnetMaskForExpressroute": {
             "type": "string",
             "defaultValue": "10.12.0.224/28"
         },
-        "subnetMaskForRemoteaccess": {
+        "subnetMaskForStorage": {
             "type": "string",
-            "defaultValue": "10.12.0.240/28"
+            "defaultValue": "10.12.3.0/24"
         },
         "subnetMaskForAzFw": {
             "type": "string",
@@ -175,10 +187,13 @@
         "erGwName": "[concat(parameters('topLevelManagementGroupPrefix'), '-ergw-', parameters('location'))]",
         "rgName": "rg-ukw-p-hub-01",
         "BastionNSG": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/networkSecurityGroups/nsg-ukw-bat-01')]",
-        "ServicesNSG": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/networkSecurityGroups/nsg-ukw-sn-mhub-services')]",
-        "BlackrockNSG": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/networkSecurityGroups/nsg-ukw-sn-mhub-blackrock')]",
-        "ExpressrouteNSG": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/networkSecurityGroups/nsg-ukw-sn-mhub-expressroute')]",
-        "RemoteaccessNSG": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/networkSecurityGroups/nsg-ukw-sn-mhub-remoteaccess')]",
+        "MgmtServicesNSG": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/networkSecurityGroups/nsg-ukw-sn-hub-core-mgmt-services')]",
+        "ProdServicesNSG": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/networkSecurityGroups/nsg-ukw-sn-hub-core-prod-services')]",
+        "DevTesttServicesNSG": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/networkSecurityGroups/nsg-ukw-sn-hub-core-devtest-services')]",
+        "UATServicesNSG": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/networkSecurityGroups/nsg-ukw-sn-hub-core-uat-services')]",
+        "KeyVaultNSG": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/networkSecurityGroups/nsg-ukw-sn-m-core-shared-keyvault')]",
+        "ExpressrouteNSG": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/networkSecurityGroups/nsg-ukw-sn-hub-core-wan-expressroute')]",
+        "StorageNSG": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/networkSecurityGroups/nsg-ukw-sn-m-core-shared-storage')]",
         "dDoSRgName": "rg-ddos-ukw-p-hub-01",
         "dDoSName": "ddos-ukw-01",
         "azFwPolicyName": "policy-ukw-p-fw-01",
@@ -192,10 +207,13 @@
         "azErGwSubnetId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/GatewaySubnet')]",
         "azErGwPipId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azErGwIpName'))]",
         "azBastionId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/AzureBastionSubnet')]",
-        "azServicesSubnetID": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/sn-mhub-services')]",
-        "azBlackrockSubnetID": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/sn-mhub-blackrock')]",
-        "azExpressrouteSubnetID": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/sn-mhub-expressroute')]",
-        "azRemoteaccessSubnetID": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/sn-mhub-remoteaccess')]",
+        "azMgmtServicesSubnetID": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/sn-hub-core-mgmt-services')]",
+        "azProdServicesSubnetID": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/sn-hub-core-prod-services')]",
+        "azDevTestServicesSubnetID": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/sn-hub-core-devtest-services')]",
+        "azUATServicesSubnetID": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/sn-hub-core-uat-services')]",
+        "azKeyVaultSubnetID": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/sn-m-core-shared-keyvault')]",
+        "azExpressrouteSubnetID": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/sn-hub-core-wan-expressroute')]",
+        "azStorageSubnetID": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/sn-m-core-shared-storage')]",
         "azFwSubnetId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'),'/providers/Microsoft.Network/virtualNetworks/', variables('hubname'), '/subnets/AzureFirewallSubnet')]",
         "azFwPipId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'), '/providers/Microsoft.Network/publicIPAddresses/', variables('azFwIpName'))]",
         "BastionPipId": "[concat('/subscriptions/', parameters('connectivitySubscriptionId'), '/resourceGroups/', variables('rgName'), '/providers/Microsoft.Network/publicIPAddresses/pip-ukw-p-bat-hub-01')]",
@@ -226,35 +244,59 @@
                 }
             }
         ],
-        "Servicessubnet": [
+        "MgmtServicessubnet": [
             {
-                "name": "sn-mhub-services",
+                "name": "sn-hub-core-mgmt-services",
                 "properties": {
-                    "addressPrefix": "[parameters('subnetMaskForServices')]"
+                    "addressPrefix": "[parameters('subnetMaskForMgmtServices')]"
                 }
             }
         ],
-        "Blackrocksubnet": [
+        "ProdServicessubnet": [
             {
-                "name": "sn-mhub-blackrock",
+                "name": "sn-hub-core-prod-services",
                 "properties": {
-                    "addressPrefix": "[parameters('subnetMaskForBlackrock')]"
+                    "addressPrefix": "[parameters('subnetMaskForProdServices')]"
+                }
+            }
+        ],
+        "DevTestServicessubnet": [
+            {
+                "name": "sn-hub-core-devtest-services",
+                "properties": {
+                    "addressPrefix": "[parameters('subnetMaskForDevTestServices')]"
+                }
+            }
+        ],
+        "UATServicessubnet": [
+            {
+                "name": "sn-hub-core-uat-services",
+                "properties": {
+                    "addressPrefix": "[parameters('subnetMaskForUATServices')]"
+                }
+            }
+        ],
+        "KeyVaultsubnet": [
+            {
+                "name": "sn-m-core-shared-keyvault",
+                "properties": {
+                    "addressPrefix": "[parameters('subnetMaskForKeyVault')]"
                 }
             }
         ],
         "Expressroutesubnet": [
             {
-                "name": "sn-mhub-expressroute",
+                "name": "sn-hub-core-wan-expressroute",
                 "properties": {
                     "addressPrefix": "[parameters('subnetMaskForExpressroute')]"
                 }
             }
         ],
-        "Remoteaccesssubnet": [
+        "Storagesubnet": [
             {
-                "name": "sn-mhub-remoteaccess",
+                "name": "sn-m-core-shared-storage",
                 "properties": {
-                    "addressPrefix": "[parameters('subnetMaskForRemoteaccess')]"
+                    "addressPrefix": "[parameters('subnetMaskForStorage')]"
                 }
             }
         ],
@@ -419,19 +461,28 @@
                                                                           empty(parameters('subnetMaskForBastion'))), variables('BastionSubnet'), json('[]')),
                                                                           if(
                                                                           not(
-                                                                              empty(parameters('subnetMaskForServices'))), variables('Servicessubnet'), json('[]')),
+                                                                              empty(parameters('subnetMaskForMgmtServices'))), variables('MgmtServicessubnet'), json('[]')),
                                                                               if(
                                                                               not(
-                                                                                  empty(parameters('subnetMaskForBlackrock'))), variables('Blackrocksubnet'), json('[]')),
+                                                                                  empty(parameters('subnetMaskForProdServices'))), variables('ProdServicessubnet'), json('[]')),
                                                                                   if(
                                                                                   not(
-                                                                                      empty(parameters('subnetMaskForExpressroute'))), variables('Expressroutesubnet'), json('[]')),
+                                                                                      empty(parameters('subnetMaskForDevTestServices'))), variables('DevTestServicessubnet'), json('[]')),
                                                                                       if(
                                                                                       not(
-                                                                                          empty(parameters('subnetMaskForRemoteaccess'))), variables('Remoteaccesssubnet'), json('[]')),
-                                                                                            if(
-                                                                                                not(
-                                                                                                    empty(parameters('subnetMaskForAzFw'))), variables('fwSubnet'), json('[]')))]",
+                                                                                          empty(parameters('subnetMaskForUATServices'))), variables('UATServicessubnet'), json('[]')),
+                                                                                          if(
+                                                                                          not(
+                                                                                              empty(parameters('subnetMaskForKeyVault'))), variables('KeyVaultsubnet'), json('[]')),
+                                                                                              if(
+                                                                                              not(
+                                                                                                  empty(parameters('subnetMaskForExpressroute'))), variables('Expressroutesubnet'), json('[]')),
+                                                                                                  if(
+                                                                                                  not(
+                                                                                                      empty(parameters('subnetMaskForStorage'))), variables('Storagesubnet'), json('[]')),
+                                                                                                      if(
+                                                                                                      not(
+                                                                                                          empty(parameters('subnetMaskForAzFw'))), variables('fwSubnet'), json('[]')))]",
                                                 "enableDdosProtection": "[if(equals(parameters('enableDdoS'), 'Yes'), 'true', 'false')]",
                                                 "ddosProtectionPlan": "[if(equals(parameters('enableDdoS'), 'Yes'), variables('ddosProtectionPlanId'), json('null'))]"
                                             }
@@ -821,7 +872,34 @@
 
     {
         "type": "Microsoft.Network/networkSecurityGroups",
-        "name": "nsg-ukw-sn-mhub-services",
+        "name": "nsg-ukw-sn-hub-core-mgmt-services",
+        "location": "ukwest",
+        "apiVersion": "2020-05-01",
+        "properties": {
+          "securityRules": []
+        }
+      },
+      {
+        "type": "Microsoft.Network/networkSecurityGroups",
+        "name": "nsg-ukw-sn-hub-core-prod-services",
+        "location": "ukwest",
+        "apiVersion": "2020-05-01",
+        "properties": {
+          "securityRules": []
+        }
+      },
+      {
+        "type": "Microsoft.Network/networkSecurityGroups",
+        "name": "nsg-ukw-sn-hub-core-devtest-services",
+        "location": "ukwest",
+        "apiVersion": "2020-05-01",
+        "properties": {
+          "securityRules": []
+        }
+      },
+      {
+        "type": "Microsoft.Network/networkSecurityGroups",
+        "name": "nsg-ukw-sn-hub-core-uat-services",
         "location": "ukwest",
         "apiVersion": "2020-05-01",
         "properties": {
@@ -831,7 +909,7 @@
 
       {
         "type": "Microsoft.Network/networkSecurityGroups",
-        "name": "nsg-ukw-sn-mhub-blackrock",
+        "name": "nsg-ukw-sn-m-core-shared-keyvault",
         "location": "ukwest",
         "apiVersion": "2020-05-01",
         "properties": {
@@ -841,7 +919,7 @@
 
       {
         "type": "Microsoft.Network/networkSecurityGroups",
-        "name": "nsg-ukw-sn-mhub-expressroute",
+        "name": "nsg-ukw-sn-hub-core-wan-expressroute",
         "location": "ukwest",
         "apiVersion": "2020-05-01",
         "properties": {
@@ -851,7 +929,7 @@
 
       {
         "type": "Microsoft.Network/networkSecurityGroups",
-        "name": "nsg-ukw-sn-mhub-remoteaccess",
+        "name": "nsg-ukw-sn-m-core-shared-storage",
         "location": "ukwest",
         "apiVersion": "2020-05-01",
         "properties": {
@@ -894,11 +972,11 @@
                                                     },
     {
                                             "apiVersion": "2020-05-01",
-                                            "name": "vn-ukw-p-hub-01/sn-mhub-services",
+                                            "name": "vn-ukw-p-hub-01/sn-hub-core-mgmt-services",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
                                             "location": "[parameters('location')]",
                                             "dependsOn": [
-                                                    "[variables('ServicesNSG')]",
+                                                    "[variables('MgmtServicesNSG')]",
                                                     "[variables('azBastionId')]",
                                                     "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
                                                     
@@ -906,39 +984,99 @@
                                             ],
                                             "properties": {
                                                            
-                                                            "addressPrefix": "[parameters('subnetMaskForServices')]",
+                                                            "addressPrefix": "[parameters('subnetMaskForMgmtServices')]",
                                                             "networkSecurityGroup": {
-                                                                "id": "[variables('ServicesNSG')]"
+                                                                "id": "[variables('MgmtServicesNSG')]"
                                                                     }
                                                              }
                                                     },
-  {
+    {
                                             "apiVersion": "2020-05-01",
-                                            "name": "vn-ukw-p-hub-01/sn-mhub-blackrock",
+                                            "name": "vn-ukw-p-hub-01/sn-hub-core-prod-services",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
                                             "location": "[parameters('location')]",
                                             "dependsOn": [
-                                                    "[variables('BlackrockNSG')]",
-                                                    "[variables('azServicesSubnetID')]",
+                                                    "[variables('ProdServicesNSG')]",
+                                                    "[variables('azMgmtServicesSubnetID')]",
+                                                    "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
+                                                                
+                                                                        
+                                            ],
+                                            "properties": {
+                                                                       
+                                                            "addressPrefix": "[parameters('subnetMaskForProdServices')]",
+                                                            "networkSecurityGroup": {
+                                                                "id": "[variables('ProdServicesNSG')]"
+                                                                    }
+                                                            }
+                                                    },
+    {
+                                            "apiVersion": "2020-05-01",
+                                            "name": "vn-ukw-p-hub-01/sn-hub-core-devtest-services",
+                                            "type": "Microsoft.Network/virtualNetworks/subnets",
+                                            "location": "[parameters('location')]",
+                                            "dependsOn": [
+                                                    "[variables('DevTestServicesNSG')]",
+                                                    "[variables('azProdServicesSubnetID')]",
+                                                    "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
+                                                                            
+                                                                                    
+                                            ],
+                                            "properties": {
+                                                                                   
+                                                            "addressPrefix": "[parameters('subnetMaskForProdServices')]",
+                                                            "networkSecurityGroup": {
+                                                                "id": "[variables('DevTestServicesNSG')]"
+                                                                    }
+                                                            }
+                                                    },
+        {
+                                            "apiVersion": "2020-05-01",
+                                            "name": "vn-ukw-p-hub-01/sn-hub-core-uat-services",
+                                            "type": "Microsoft.Network/virtualNetworks/subnets",
+                                            "location": "[parameters('location')]",
+                                            "dependsOn": [
+                                                    "[variables('UATServicesNSG')]",
+                                                    "[variables('azDevTestServicesSubnetID')]",
+                                                    "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
+                                                                                        
+                                                                                                
+                                            ],
+                                            "properties": {
+                                                                                               
+                                                            "addressPrefix": "[parameters('subnetMaskForUATServices')]",
+                                                            "networkSecurityGroup": {
+                                                                "id": "[variables('UATServicesNSG')]"
+                                                                    }
+                                                            }
+                                                    },
+  {
+                                            "apiVersion": "2020-05-01",
+                                            "name": "vn-ukw-p-hub-01/sn-m-core-shared-keyvault",
+                                            "type": "Microsoft.Network/virtualNetworks/subnets",
+                                            "location": "[parameters('location')]",
+                                            "dependsOn": [
+                                                    "[variables('KeyVaultNSG')]",
+                                                    "[variables('azUATServicesSubnetID')]",
                                                     "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
                                                                         
                                             ],
                                              "properties": {
                                                                        
-                                                            "addressPrefix": "[parameters('subnetMaskForBlackrock')]",
+                                                            "addressPrefix": "[parameters('subnetMaskForKeyVault')]",
                                                             "networkSecurityGroup": {
-                                                                "id": "[variables('BlackrockNSG')]"
+                                                                "id": "[variables('KeyVaultNSG')]"
                                                                     }
                                                             }
                                                      },
     {
                                             "apiVersion": "2020-05-01",
-                                            "name": "vn-ukw-p-hub-01/sn-mhub-expressroute",
+                                            "name": "vn-ukw-p-hub-01/sn-hub-core-wan-expressroute",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
                                             "location": "[parameters('location')]",
                                             "dependsOn": [
                                                     "[variables('ExpressrouteNSG')]",
-                                                    "[variables('azBlackrockSubnetID')]",
+                                                    "[variables('azKeyVaultSubnetID')]",
                                                     "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
                                                                                     
                                             ],
@@ -952,20 +1090,20 @@
                                                     },
     {
                                             "apiVersion": "2020-05-01",
-                                            "name": "vn-ukw-p-hub-01/sn-mhub-remoteaccess",
+                                            "name": "vn-ukw-p-hub-01/sn-m-core-shared-storage",
                                             "type": "Microsoft.Network/virtualNetworks/subnets",
                                             "location": "[parameters('location')]",
                                             "dependsOn": [
-                                                    "[variables('RemoteaccessNSG')]",
+                                                    "[variables('StorageNSG')]",
                                                     "[variables('azExpressrouteSubnetID')]",
                                                     "[concat('Microsoft.Network/virtualNetworks/', variables('hubName'))]"
                                                                                                 
                                             ],
                                             "properties": {
                                                                                                
-                                                            "addressPrefix": "[parameters('subnetMaskForRemoteaccess')]",
+                                                            "addressPrefix": "[parameters('subnetMaskForStorage')]",
                                                             "networkSecurityGroup": {
-                                                                "id": "[variables('RemoteaccessNSG')]"
+                                                                "id": "[variables('StorageNSG')]"
                                                                     }
                                                             }
                                                     },
